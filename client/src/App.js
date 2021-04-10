@@ -6,9 +6,14 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import PostNew from './Components/Admin/postNew'
 import NavHeader from './Components/Nav'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Landing from './Pages/Landing'
+
+
+
 
 function App() {
   return (
@@ -20,9 +25,9 @@ function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          {/* <Route exact path="/"> 
-            <LandingPage />
-          </Route> */}
+          <Route exact path="/"> 
+            <Landing />
+          </Route>
           <Route exact path="/admin/postNew">
             <PostNew />
           </Route>
