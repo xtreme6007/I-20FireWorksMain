@@ -8,7 +8,7 @@ export default function NavHeader(){
 
 
 return(
-<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
   <Navbar.Brand href="#home">I-20 Fireworks</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
