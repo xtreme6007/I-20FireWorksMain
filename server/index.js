@@ -2,6 +2,8 @@ const express = require('express')
 const bodyParser = require("body-parser")
 const cors = require('cors')
 const app = express()
+const path = require('path')
+const fileUpload = require('express-fileupload')
 const mysql = require('mysql')
 const db = mysql.createPool({
     host: 'localhost',
@@ -9,9 +11,12 @@ const db = mysql.createPool({
     password: 'password',
     database: 'I-20_FireWorks'
 })
+const fs = require("fs");
 app.use(cors())
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended : true}))
+app.use(fileUpload())
+
 
 app.get('/api/getProducts', (req, res) => {
     const sqlGet = "SELECT * FROM Inventory"
@@ -26,12 +31,20 @@ app.post('/api/admin/postNew', (req,res) => {
     const category = req.body.category
     const price = req.body.price
     const previewUrl = req.body.previewUrl
+    const file = req.img
+    const img = req.body.img
+       
+    
 
-    const sqlInsert = "INSERT INTO Inventory (name, category, price, preview_link) VALUES (?,?,?,?)"
-    db.query(sqlInsert, [name, category, price, previewUrl], (err, result) => {
+    const sqlInsert = "INSERT INTO Inventory (name, category, price, preview_link, img) VALUES (?,?,?,?,?)";
+    db.query(sqlInsert, [name, category, price, previewUrl, img], (err, result) => {
+        console.log("IMAGEEE",img)
         console.log(result)
     })
 })
+
+
+
 
 app.listen(3001, () => {
     console.log("Running on port 3001")

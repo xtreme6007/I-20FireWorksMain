@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import PostNew from './Components/Admin/postNew'
 import NavHeader from './Components/Nav'
 import Landing from './Pages/Landing'
+import SearchMenu from './Pages/SearchMenu'
 
 
 
@@ -26,7 +27,8 @@ function App() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route exact path="/"> 
-            <Landing />
+            {/* <Landing /> */}
+            <SearchMenu />
           </Route>
           <Route exact path="/admin/postNew">
             <PostNew />
