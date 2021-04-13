@@ -31,15 +31,14 @@ app.post('/api/admin/postNew', (req,res) => {
     const category = req.body.category
     const price = req.body.price
     const previewUrl = req.body.previewUrl
-    const file = req.img
-    const img = req.body.img
+    const description = req.body.description
        
     
 
-    const sqlInsert = "INSERT INTO Inventory (name, category, price, preview_link, img) VALUES (?,?,?,?,?)";
-    db.query(sqlInsert, [name, category, price, previewUrl, img], (err, result) => {
-        console.log("IMAGEEE",img)
+    const sqlInsert = "INSERT INTO Inventory (name, category, price, preview_link, description) VALUES (?,?,?,?,?)";
+    db.query(sqlInsert, [name, category, price, previewUrl, description], (err, result) => {
         console.log(result)
+
     })
 })
 

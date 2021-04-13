@@ -8,8 +8,7 @@ export default function PostNew() {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [url, setUrl] = useState("");
-  const [img, setImg] = useState("");
-  const [image, setImage] = useState(null);
+  const [description, setDescription] = useState("");
   const [progress, setProgress] = useState(0);
   let title;
 
@@ -19,7 +18,7 @@ export default function PostNew() {
       category: category,
       price: price,
       previewUrl: url,
-      img: img,
+      description: description,
     }).then(() => {
       alert("Succseful Insert");
     });
@@ -37,6 +36,15 @@ export default function PostNew() {
           name="productName"
           onChange={(e) => {
             setProductName(e.target.value);
+            title = e.target.value
+          }}
+        ></input>
+        <label>Description</label>
+        <input
+          type="text"
+          name="description"
+          onChange={(e) => {
+            setDescription(e.target.value);
             title = e.target.value
           }}
         ></input>
@@ -71,14 +79,7 @@ export default function PostNew() {
             setUrl(e.target.value);
           }}
         ></input>
-        {/* <input
-          type="file"
-          name="img"
-          onChange={(e) => {
-            console.log(e.target.value)
-            setImg(e.target.value);
-          }}
-        ></input> */}
+       
         <ImageUploader prodName = {productName}/>
 
         <button
