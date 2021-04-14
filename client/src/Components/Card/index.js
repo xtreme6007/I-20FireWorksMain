@@ -24,7 +24,6 @@ const useStyles = makeStyles({
     height: 140,
     maxWidth: 345,
   },
-  
 });
 
 export default function CustomCard(props) {
@@ -46,20 +45,51 @@ export default function CustomCard(props) {
 
             {/* <img src={CLOUDINARY_UPLOAD_URL + '/' + val.name} /> */}
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2" style={{textAlign: "center"}}>
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="h2"
+                style={{ textAlign: "center" }}
+              >
                 {props.name}
               </Typography>
-              <Typography gutterBottom variant="body2" color="textSecondary" component="p" style={{
-    maxWidth: "75%",
-    color: "green",
-    textAlign: "center",
-    marginLeft: "auto",
-    marginRight: "auto",
-    // overflow: "auto",
-  }}>
+              <Typography
+                gutterBottom
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                style={{
+                  maxWidth: "75%",
+                  color: "green",
+                  textAlign: "center",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  // overflow: "auto",
+                }}>
+                  {props.category}
+                </Typography>
+              <Typography
+                gutterBottom
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                style={{
+                  maxWidth: "75%",
+                  color: "green",
+                  textAlign: "center",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  // overflow: "auto",
+                }}
+              >
                 {props.brand}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p" style={{textAlign: "center"}}>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                style={{ textAlign: "center" }}
+              >
                 $ {props.price}/ Per Unit
               </Typography>
             </CardContent>
@@ -76,7 +106,6 @@ export default function CustomCard(props) {
             </Button>
           </CardActions>
         </Card>
-        
       </div>
     </>
   );

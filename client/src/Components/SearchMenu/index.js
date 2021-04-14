@@ -1,17 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
-import SearchDrawer from "../SearchDrawer";
-import MoreIcon from "@material-ui/icons/MoreVert";
 
 import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
@@ -23,6 +18,11 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import Collapse from "@material-ui/core/Collapse";
+import Axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -95,91 +95,125 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [showDrawer, setShowDrawer] = React.useState(0);
+  const [openDrawer, setOpen] = React.useState(true);
+  const [openBrand, setOpenBrand] = React.useState(true);
+  const [openCategory, setOpenCategory] = React.useState(true);
+  const [state, setState] = React.useState({ left: false });
+  const [categoryList, setCategoryList] = useState([]);
+  const [brandList, setBrandList] = useState([]);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const [state, setState] = React.useState({
-    top: false,
-    filter: false,
-    bottom: false,
-    right: false,
-  });
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+  useEffect(() => {
+    Axios.get("http://localhost:3001/api/getBrands").then((res) => {
+      setBrandList(res.data);
+      //   setState({...state, [brandList] : res.data})
+    });
+
+    Axios.get("http://localhost:3001/api/getCategories").then((res) => {
+      setCategoryList(res.data);
+      //   setState({...state, [brandList] : res.data})
+      console.log("after api call", res.data);
+    });
+  }, []);
+
+  const toggleDrawer = (anchor, openDrawer) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
-
-    setState({ ...state, [anchor]: open });
+    setState({ ...state, [anchor]: openDrawer });
   };
+
+   
+
+  const handleClick = () => {
+    setOpenBrand(!openBrand);
+  };
+  // Used to render filter drawer list
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
-        [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+        [classes.fullList]: anchor === "top" || anchor === "bottom",
       })}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+      {/* Used to display Brands in filter Drawer */}
+      <List
+        component="nav"
+        aria-labelledby="nested-list-subheader"
+        className={classes.root}
+      >
+        <ListItem button onClick={handleClick}>
+          <ListItemText primary="Brands" />
+          {openBrand ? <ExpandMore /> : <ExpandLess />}
+        </ListItem>
+
+        <Collapse in={openBrand} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <div>
+              {brandList.map((item) => (
+                <li key={item.brand_name}>
+                  {" "}
+                  <input type= "checkbox" value={item.brand_name}
+                    onClick={() => props.onFilter(item.brand_name)}
+                    checked="true"
+                   />
+                    {item.brand_name}
+                  
+                </li>
+              ))}
+            </div>
+          </List>
+        </Collapse>
       </List>
       <Divider />
+      {/* Used to display Category Types */}
+      <List
+        component="nav"
+        aria-labelledby="nested-list-subheader"
+        className={classes.root}
+      >
+        <ListItem button onClick={handleClick}>
+          <ListItemText primary="Categories" />
+          {openCategory ? <ExpandMore /> : <ExpandLess />}
+        </ListItem>
+
+        <Collapse in={openBrand} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <div>
+              {categoryList.map((item) => (
+                <li key={item.Type}>
+                  <input type= "checkbox" value={item.Type}
+                    onClick={() => props.categoryFilter(item.Type)}
+                   />
+                    {item.Type}
+                  
+                </li>
+              ))}
+            </div>
+          </List>
+        </Collapse>
+      </List>
+      <Divider />
+
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+        {["All mail", "Trash", "Spam"].map((text, index) => (
           <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
     </div>
-  );
-
-  
-
-  const handleMobileMenuOpen = (event) => {
-    // setMobileMoreAnchorEl(event.currentTarget);
-    console.log("This is here");
-  };
-
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMenuOpen}
-    >
-       
-
-    </Menu>
-  );
-
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMobileMenuOpen}
-    >
-      <MenuItem></MenuItem>
-    </Menu>
   );
 
   return (
@@ -194,16 +228,21 @@ export default function PrimarySearchAppBar() {
         }}
       >
         <Toolbar>
-        <div>
-      {['filter',].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-            {list(anchor)}
-          </Drawer>
-        </React.Fragment>
-      ))}
-    </div>
+          <div>
+            {["left"].map((anchor) => (
+              <React.Fragment key={anchor}>
+                <Button onClick={toggleDrawer(anchor, true)}>Filter</Button>
+                <Drawer
+                  anchor={anchor}
+                  open={state[anchor]}
+                  onClose={toggleDrawer(anchor, false)}
+                  
+                >
+                  {list(anchor)}
+                </Drawer>
+              </React.Fragment>
+            ))}
+          </div>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -218,12 +257,8 @@ export default function PrimarySearchAppBar() {
             />
           </div>
           <div className={classes.grow} />
-          
         </Toolbar>
       </AppBar>
-
-      {renderMobileMenu}
-      {renderMenu}
     </div>
   );
 }
