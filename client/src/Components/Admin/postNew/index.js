@@ -5,6 +5,9 @@ import ImageUploader from "../../ImageUploader";
 import { useFormik } from "formik";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
 
 export default function PostNew() {
   const [productName, setProductName] = useState("");
@@ -14,19 +17,21 @@ export default function PostNew() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState();
   const [progress, setProgress] = useState(0);
+  const [brandList, setBrandList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
   let title;
 
-  // const submitProduct = () => {
-  //   Axios.post("http://localhost:3001/api/admin/postNew", {
-  //     name: productName,
-  //     category: category,
-  //     price: price,
-  //     previewUrl: url,
-  //     description: description,
-  //   }).then(() => {
-  //     alert("Succseful Insert");
-  //   });
-  // };
+  
+  useEffect(() => {
+    Axios.get("http://localhost:3001/api/getBrands").then((res) => {
+      setBrandList(res.data);
+    });
+
+    Axios.get("http://localhost:3001/api/getCategories").then((res) => {
+      setCategoryList(res.data);
+    });
+    console.log(categoryList)
+  },[]);
 
   const formik = useFormik({
     initialValues: {
@@ -36,7 +41,7 @@ export default function PostNew() {
       category: "",
       price: "",
       url: "",
-      files: [],
+      files: "",
     },
     onSubmit: (values) => {
       Axios.post("http://localhost:3001/api/admin/postNew", {
@@ -51,7 +56,8 @@ export default function PostNew() {
   });
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" style={{backgroundColor: "green", borderRadius: "80px", marginTop: "25px"}}>
+      <h1>Upload Product Form</h1>
       <form onSubmit={formik.handleSubmit}>
         <TextField
           id="productName"
@@ -61,6 +67,7 @@ export default function PostNew() {
           value={formik.values.productName}
           label="Product Name"
         />
+        <br/>
 
         <TextField
           id="description"
@@ -70,7 +77,7 @@ export default function PostNew() {
           value={formik.values.description}
           label="Description"
         />
-
+<br/>
         <TextField
           id="brand"
           name="brand"
@@ -79,15 +86,20 @@ export default function PostNew() {
           value={formik.values.brand}
           label="Brand"
         />
-        <TextField
+        <br/>
+        <Select
           id="category"
           name="category"
           type="text"
           onChange={formik.handleChange}
           value={formik.values.category}
           label="Category"
-        />
-
+        >
+            {categoryList.map((cat) => {<MenuItem value={cat.Type}>{cat.Type}</MenuItem>})}
+         
+          
+          </Select>
+        <br/>
         <TextField
           id="price"
           name="price"
@@ -96,7 +108,7 @@ export default function PostNew() {
           value={formik.values.price}
           label="Price"
         />
-
+          <br/>
         <TextField
           id="url"
           name="url"
@@ -105,7 +117,7 @@ export default function PostNew() {
           value={formik.values.url}
           label="Preview Url"
         />
-
+          <br/>
         <ImageUploader
           prodName={formik.values.productName}
           value={formik.values.files}

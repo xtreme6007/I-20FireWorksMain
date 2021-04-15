@@ -113,7 +113,7 @@ export default function ImageUploader(prodName, { defaultImage }) {
       >
         <form className="flex justify-center items-center h-full">
           {progress === 0 ? (
-            <div className="text-gray-700 text-center">
+            <div className="text-gray-700 text-center" style={{borderStyle: "dotted", width: "45%", justifyContent: "center", alignItems: "center", position: "fixed", margin: "10% auto"}}>
               <div>Drag and Drop assets here</div>
               <div className="my-2">or</div>
               <button
@@ -125,7 +125,7 @@ export default function ImageUploader(prodName, { defaultImage }) {
               </button>
             </div>
           ) : (
-           null
+            <span className="text-gray-700">{progress}%</span>
           )}
 
           <input
