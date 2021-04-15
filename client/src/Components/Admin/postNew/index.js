@@ -10,28 +10,34 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 
 export default function PostNew() {
-  const [productName, setProductName] = useState("");
-  const [category, setCategory] = useState("");
-  const [price, setPrice] = useState("");
-  const [url, setUrl] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState();
-  const [progress, setProgress] = useState(0);
   const [brandList, setBrandList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
-  let title;
+ 
 
   
-  useEffect(() => {
+  useEffect( () => {
+    getBrands()
+    getCats()
+      
+  },[]);
+
+
+  const getBrands = () => {
     Axios.get("http://localhost:3001/api/getBrands").then((res) => {
-      setBrandList(res.data);
+       setBrandList(res.data);
+       console.log(brandList)
+    });
+  }
+    const getCats = () => {
+      Axios.get("http://localhost:3001/api/getCategories").then((res) => {
+       setCategoryList(res.data);
+       console.log("CATLIST", categoryList)
     });
 
-    Axios.get("http://localhost:3001/api/getCategories").then((res) => {
-      setCategoryList(res.data);
-    });
-    console.log(categoryList)
-  },[]);
+    }
+    
+
+  
 
   const formik = useFormik({
     initialValues: {
@@ -94,8 +100,12 @@ export default function PostNew() {
           onChange={formik.handleChange}
           value={formik.values.category}
           label="Category"
+          style={{width: "30%"}}
         >
-            {categoryList.map((cat) => {<MenuItem value={cat.Type}>{cat.Type}</MenuItem>})}
+            {categoryList.map((cat) => {
+              // {console.log("INSIDE RETURNNNN",cat.Type)}
+            return <MenuItem value={cat.Type}>{cat.Type}</MenuItem>
+            })}
          
           
           </Select>

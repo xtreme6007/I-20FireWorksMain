@@ -110,8 +110,8 @@ export default function PrimarySearchAppBar(props) {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  useEffect(() => {
-    Axios.get("http://localhost:3001/api/getBrands").then((res) => {
+  useEffect(  () => {
+     Axios.get("http://localhost:3001/api/getBrands").then((res) => {
       setBrandList(res.data);
     });
 

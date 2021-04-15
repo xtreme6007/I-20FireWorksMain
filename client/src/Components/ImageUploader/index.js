@@ -111,7 +111,7 @@ export default function ImageUploader(prodName, { defaultImage }) {
         className="bg-gray-200 border-4 border-dashed border-gray-400 rounded-lg"
         style={{ height: 400, width: 600 }}
       >
-        <form className="flex justify-center items-center h-full">
+       
           {progress === 0 ? (
             <div className="text-gray-700 text-center" style={{borderStyle: "dotted", width: "45%", justifyContent: "center", alignItems: "center", position: "fixed", margin: "10% auto"}}>
               <div>Drag and Drop assets here</div>
@@ -135,7 +135,7 @@ export default function ImageUploader(prodName, { defaultImage }) {
             style={{ display: "none" }}
             onChange={(e) => handleFiles(e.target.files)}
           />
-        </form>
+        
       </div>
     )}
   </div>
