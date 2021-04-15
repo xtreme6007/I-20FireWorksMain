@@ -106,22 +106,19 @@ export default function PrimarySearchAppBar(props) {
   const [state, setState] = React.useState({ left: false });
   const [categoryList, setCategoryList] = useState([]);
   const [brandList, setBrandList] = useState([]);
-
+  const [checkedArray, setCheckedArray] = React.useState([]);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/getBrands").then((res) => {
       setBrandList(res.data);
-      //   setState({...state, [brandList] : res.data})
     });
 
     Axios.get("http://localhost:3001/api/getCategories").then((res) => {
       setCategoryList(res.data);
-      //   setState({...state, [brandList] : res.data})
-      console.log("after api call", res.data);
     });
-  }, []);
+  }, [checkedArray]);
 
   const toggleDrawer = (anchor, openDrawer) => (event) => {
     if (
@@ -131,9 +128,10 @@ export default function PrimarySearchAppBar(props) {
       return;
     }
     setState({ ...state, [anchor]: openDrawer });
+    if (openDrawer === true) {
+      props.drawerHandle();
+    }
   };
-
-   
 
   const handleClick = () => {
     setOpenBrand(!openBrand);
@@ -164,12 +162,18 @@ export default function PrimarySearchAppBar(props) {
               {brandList.map((item) => (
                 <li key={item.brand_name}>
                   {" "}
-                  <input type= "checkbox" value={item.brand_name}
-                    onClick={() => props.onFilter(item.brand_name)}
-                    checked="true"
-                   />
-                    {item.brand_name}
-                  
+                  <input
+                    type="checkbox"
+                    value={item.brand_name}
+                    onChange={() => {
+                      setCheckedArray((checked) => [
+                        ...checked,
+                        item.brand_name,
+                      ]);
+                      props.onFilter(item.brand_name);
+                    }}
+                  />
+                  {item.brand_name}
                 </li>
               ))}
             </div>
@@ -193,11 +197,12 @@ export default function PrimarySearchAppBar(props) {
             <div>
               {categoryList.map((item) => (
                 <li key={item.Type}>
-                  <input type= "checkbox" value={item.Type}
+                  <input
+                    type="checkbox"
+                    value={item.Type}
                     onClick={() => props.categoryFilter(item.Type)}
-                   />
-                    {item.Type}
-                  
+                  />
+                  {item.Type}
                 </li>
               ))}
             </div>
@@ -205,14 +210,6 @@ export default function PrimarySearchAppBar(props) {
         </Collapse>
       </List>
       <Divider />
-
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
     </div>
   );
 
@@ -236,7 +233,6 @@ export default function PrimarySearchAppBar(props) {
                   anchor={anchor}
                   open={state[anchor]}
                   onClose={toggleDrawer(anchor, false)}
-                  
                 >
                   {list(anchor)}
                 </Drawer>

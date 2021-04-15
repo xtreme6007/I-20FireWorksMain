@@ -10,13 +10,14 @@ export default function SearchPage() {
   const [productList, setProductList] = useState([]);
   const [brandFilter, setBrandFilter] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState([]);
+  const [checked, setChecked] = useState({});
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/getProducts").then((response) => {
       console.log(response.data);
       setProductList(response.data);
       console.log("Brand Filter", brandFilter);
-      console.log(categoryFilter)
+      console.log(categoryFilter);
     });
     // setBrandFilter(brandFilter)
   }, [brandFilter, categoryFilter]);
@@ -25,22 +26,21 @@ export default function SearchPage() {
     if (brandFilter.includes(brand)) {
       const newList = brandFilter
         .filter((name) => name != brand)
-        .map((val) => { 
+        .map((val) => {
           return val;
         });
       setBrandFilter(newList);
-      console.log("NewList",newList);
+      console.log("NewList", newList);
     } else {
       setBrandFilter([...brandFilter, brand]);
     }
   };
 
-
   const onFilterCategory = (category) => {
     if (categoryFilter.includes(category)) {
       const newList = categoryFilter
         .filter((name) => name != category)
-        .map((val) => { 
+        .map((val) => {
           return val;
         });
       setCategoryFilter(newList);
@@ -48,7 +48,12 @@ export default function SearchPage() {
     } else {
       setCategoryFilter([...categoryFilter, category]);
     }
-    console.log(categoryFilter)
+    console.log(categoryFilter);
+  };
+
+  const handleDrawer = () => {
+    setBrandFilter([]);
+    setCategoryFilter([]);
   };
 
   return (
@@ -58,10 +63,15 @@ export default function SearchPage() {
           onFilter={onFilterBrand}
           brandFilter={brandFilter}
           categoryFilter={onFilterCategory}
+          drawerHandle={handleDrawer}
         />
         <CardGroup>
           {productList.map((val) => {
-            if ((brandFilter.includes(val.brand) || brandFilter.length === 0) && (categoryFilter.includes(val.category) || categoryFilter.length ===0)) {
+            if (
+              (brandFilter.includes(val.brand) || brandFilter.length === 0) &&
+              (categoryFilter.includes(val.category) ||
+                categoryFilter.length === 0)
+            ) {
               return (
                 <CustomCard
                   name={val.name}

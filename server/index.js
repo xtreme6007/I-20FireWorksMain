@@ -32,11 +32,11 @@ app.get("/api/getBrands", (req, res) => {
 });
 
 app.get("/api/getCategories", (req, res) => {
-    const sqlGet = "SELECT * FROM Categories";
-    db.query(sqlGet, (err, result) => {
-      res.send(result);
-    });
+  const sqlGet = "SELECT * FROM Categories";
+  db.query(sqlGet, (err, result) => {
+    res.send(result);
   });
+});
 
 app.post("/api/admin/postNew", (req, res) => {
   const name = req.body.name;
@@ -44,12 +44,13 @@ app.post("/api/admin/postNew", (req, res) => {
   const price = req.body.price;
   const previewUrl = req.body.previewUrl;
   const description = req.body.description;
+  const brand = req.body.brand
 
   const sqlInsert =
-    "INSERT INTO Inventory (name, category, price, preview_link, description) VALUES (?,?,?,?,?)";
+    "INSERT INTO Inventory (name, category, price, preview_link, description, brand) VALUES (?,?,?,?,?,?)";
   db.query(
     sqlInsert,
-    [name, category, price, previewUrl, description],
+    [name, category, price, previewUrl, description, brand],
     (err, result) => {
       console.log(result);
     }
