@@ -113,7 +113,7 @@ export default function ImageUploader(prodName, { defaultImage }) {
       >
        
           {progress === 0 ? (
-            <div className="text-gray-700 text-center" style={{borderStyle: "dotted", width: "45%", justifyContent: "center", alignItems: "center", position: "fixed", margin: "10% auto"}}>
+            <div className="text-gray-700 text-center" style={{borderStyle: "dotted", width: "25%", justifyContent: "center", alignItems: "center", position: "fixed", margin: "10% auto"}}>
               <div>Drag and Drop assets here</div>
               <div className="my-2">or</div>
               <button

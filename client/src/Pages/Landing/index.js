@@ -4,6 +4,8 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import "./landing.css";
 import Container from "react-bootstrap/Container";
 import Button from "@material-ui/core/Button";
+import LoginButton from "../../Components/LoginButton"
+import LogoutButton from '../../Components/LogoutButton'
 
 export default function Landing() {
   return (
@@ -31,9 +33,12 @@ export default function Landing() {
           <Button variant="contained" color="default" style={{margin: "1%"}}>
             How It Works
           </Button>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" href='/search'>
             Start Shopping
           </Button>
+          <LoginButton />
+          <LogoutButton />
+
         </div>
       </div>
     </div>

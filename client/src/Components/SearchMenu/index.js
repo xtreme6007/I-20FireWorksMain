@@ -16,9 +16,6 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
@@ -106,7 +103,6 @@ export default function PrimarySearchAppBar(props) {
   const [state, setState] = React.useState({ left: false });
   const [categoryList, setCategoryList] = useState([]);
   const [brandList, setBrandList] = useState([]);
-  const [checkedArray, setCheckedArray] = React.useState([]);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -118,7 +114,7 @@ export default function PrimarySearchAppBar(props) {
     Axios.get("http://localhost:3001/api/getCategories").then((res) => {
       setCategoryList(res.data);
     });
-  }, [checkedArray]);
+  },[]);
 
   const toggleDrawer = (anchor, openDrawer) => (event) => {
     if (
@@ -166,11 +162,7 @@ export default function PrimarySearchAppBar(props) {
                     type="checkbox"
                     value={item.brand_name}
                     onChange={() => {
-                      setCheckedArray((checked) => [
-                        ...checked,
-                        item.brand_name,
-                      ]);
-                      props.onFilter(item.brand_name);
+                      props.onFilter(item.brand_name)
                     }}
                   />
                   {item.brand_name}
@@ -250,8 +242,12 @@ export default function PrimarySearchAppBar(props) {
                 input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
+              onChange={(e) => props.query(e.target.value)}
             />
+
+
           </div>
+          <Button color="primary" onClick={props.searchSubmit}>Search</Button>
           <div className={classes.grow} />
         </Toolbar>
       </AppBar>

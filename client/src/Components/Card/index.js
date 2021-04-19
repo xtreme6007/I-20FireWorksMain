@@ -60,7 +60,7 @@ export default function CustomCard(props) {
                 component="p"
                 style={{
                   maxWidth: "75%",
-                  color: "green",
+                  color: "blue",
                   textAlign: "center",
                   marginLeft: "auto",
                   marginRight: "auto",

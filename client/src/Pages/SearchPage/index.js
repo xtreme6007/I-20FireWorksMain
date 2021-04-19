@@ -5,21 +5,24 @@ import CustomCard from "../../Components/Card";
 import Container from "@material-ui/core/Container";
 import CardGroup from "react-bootstrap/CardGroup";
 import PrimarySearchAppBar from "../../Components/SearchMenu";
+import shallowCompare from 'react-addons-shallow-compare';
 
 export default function SearchPage() {
   const [productList, setProductList] = useState([]);
   const [brandFilter, setBrandFilter] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState([]);
   const [checked, setChecked] = useState({});
+  const [query, setQuery] = useState("")
+  const [queryFilter, setQueryFilter] = useState("")
+
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/getProducts").then((response) => {
       console.log(response.data);
       setProductList(response.data);
-      console.log("Brand Filter", brandFilter);
-      console.log(categoryFilter);
     });
-    // setBrandFilter(brandFilter)
+    console.log("QUERY",query)
+    console.log("QUERY FILTER", queryFilter)
   }, [brandFilter, categoryFilter]);
 
   const onFilterBrand = (brand) => {
@@ -55,6 +58,16 @@ export default function SearchPage() {
     setBrandFilter([]);
     setCategoryFilter([]);
   };
+  const handleSearchChange = (q) => {
+        setQuery(q)
+        console.log(query)
+  }
+  const handleSearchSubmit = () => {
+      setBrandFilter([])
+      setCategoryFilter([])
+      setQueryFilter(query)
+
+  }
 
   return (
     <>
@@ -64,13 +77,15 @@ export default function SearchPage() {
           brandFilter={brandFilter}
           categoryFilter={onFilterCategory}
           drawerHandle={handleDrawer}
+          query={handleSearchChange}
+          searchSubmit={handleSearchSubmit}
+
         />
         <CardGroup>
           {productList.map((val) => {
             if (
               (brandFilter.includes(val.brand) || brandFilter.length === 0) &&
-              (categoryFilter.includes(val.category) ||
-                categoryFilter.length === 0)
+              (categoryFilter.includes(val.category) || categoryFilter.length === 0) && (val.name.includes(query) || val.brand.includes(query) || queryFilter == val.category || queryFilter == '')
             ) {
               return (
                 <CustomCard
