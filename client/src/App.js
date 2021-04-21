@@ -7,22 +7,24 @@ import {
   Link
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {useAuth0} from '@auth0/auth0-react' 
+import { useEffect } from 'react';
 
 import PostNew from './Components/Admin/postNew'
 import NavHeader from './Components/Nav'
 import Landing from './Pages/Landing'
 import SearchPage from './Pages/SearchPage'
 import LoginButton from './Components/LoginButton'
-import {useAuth0} from '@auth0/auth0-react' 
-import { useEffect } from 'react';
+import MyProfile from './Pages/MyProfile'
 
 
 
 function App() {
-  const {loginWithRedirect, user, isAuthenticated} = useAuth0()
+  const {loginWithRedirect, user, isAuthenticated, getAccessTokenWithPopup} = useAuth0()
+  const admin = process.env.REACT_APP_ADMIN
   useEffect(() => {
 
-    console.log("USER",user)
+    // console.log("USER", user) 
 
   })
 
@@ -38,7 +40,11 @@ function App() {
            
           </Route>
           <Route exact path="/admin/postNew">
-            <PostNew />
+            { isAuthenticated && user.nickname === admin ?  <PostNew /> : null}
+          </Route>
+          <Route exact path="/myProfile">
+          { isAuthenticated ?  <MyProfile  user= {user}/> : null}
+
           </Route>
           
           <Route path="/search">

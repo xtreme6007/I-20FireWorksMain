@@ -21,13 +21,15 @@ export default function PostNew() {
       
   },[]);
 
-
+// Function used to make apoi call to database to retrive Brands of fireworks  
   const getBrands = () => {
     Axios.get("http://localhost:3001/api/getBrands").then((res) => {
        setBrandList(res.data);
        console.log(brandList)
     });
   }
+  // Function used to make api call to database to retrive Categories of fireworks  
+
     const getCats = () => {
       Axios.get("http://localhost:3001/api/getCategories").then((res) => {
        setCategoryList(res.data);
@@ -65,6 +67,7 @@ export default function PostNew() {
     <Container maxWidth="sm" style={{backgroundColor: "green", borderRadius: "80px", marginTop: "25px"}}>
       <h1>Upload Product Form</h1>
       <form onSubmit={formik.handleSubmit}>
+        {/* Product Name */}
         <TextField
           id="productName"
           name="productName"
@@ -74,7 +77,7 @@ export default function PostNew() {
           label="Product Name"
         />
         <br/>
-
+{/* Description  */}
         <TextField
           id="description"
           name="description"
@@ -84,6 +87,7 @@ export default function PostNew() {
           label="Description"
         />
 <br/>
+{/* Brand */}
         <TextField
           id="brand"
           name="brand"
@@ -93,6 +97,7 @@ export default function PostNew() {
           label="Brand"
         />
         <br/>
+        {/* Category */}
         <Select
           id="category"
           name="category"
@@ -102,6 +107,7 @@ export default function PostNew() {
           label="Category"
           style={{width: "30%"}}
         >
+          {/* Map over categoryList to display values as menu items */}
             {categoryList.map((cat) => {
               // {console.log("INSIDE RETURNNNN",cat.Type)}
             return <MenuItem value={cat.Type}>{cat.Type}</MenuItem>
@@ -110,6 +116,7 @@ export default function PostNew() {
           
           </Select>
         <br/>
+        {/* Price */}
         <TextField
           id="price"
           name="price"
@@ -119,6 +126,7 @@ export default function PostNew() {
           label="Price"
         />
           <br/>
+          {/* Preview Url */}
         <TextField
           id="url"
           name="url"
@@ -128,6 +136,7 @@ export default function PostNew() {
           label="Preview Url"
         />
           <br/>
+          {/* Component used to upload image */}
         <ImageUploader
           prodName={formik.values.productName}
           value={formik.values.files}
