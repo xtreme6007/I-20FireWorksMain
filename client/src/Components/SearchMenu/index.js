@@ -107,11 +107,11 @@ export default function PrimarySearchAppBar(props) {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   useEffect(  () => {
-     Axios.get("https://i20fireworks.herokuapp.com/api/getBrands").then((res) => {
+     Axios.get("http://i20fireworks.herokuapp.com/api/getBrands").then((res) => {
       setBrandList(res.data);
     });
 
-    Axios.get("https://i20fireworks.herokuapp.com/api/getCategories").then((res) => {
+    Axios.get("http://i20fireworks.herokuapp.com/api/getCategories").then((res) => {
       setCategoryList(res.data);
     });
   },[]);

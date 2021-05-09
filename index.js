@@ -53,5 +53,5 @@ app.post("/api/admin/postNew", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("Running on port");
+  console.log("Running on port" + PORT);
 });
