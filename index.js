@@ -52,6 +52,11 @@ app.post("/api/admin/postNew", (req, res) => {
   );
 });
 
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
+
 app.listen(PORT, () => {
   console.log("Running on port" + PORT);
 });
