@@ -17,7 +17,7 @@ export default function SearchPage() {
 
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/getProducts").then((response) => {
+    Axios.get("https://i20fireworks.herokuapp.com/api/getProducts").then((response) => {
       console.log(response.data);
       setProductList(response.data);
     });
