@@ -4,7 +4,7 @@ const cors = require("cors");
 const app = express();
 const path = require("path");
 const fileUpload = require("express-fileupload");
-
+const db = require("./config/db")
 const fs = require("fs");
 const PORT = 3001
 app.use(cors());
