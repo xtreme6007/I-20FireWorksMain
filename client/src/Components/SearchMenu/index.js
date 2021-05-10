@@ -107,7 +107,7 @@ export default function PrimarySearchAppBar(props) {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   useEffect(  () => {
-     Axios.get("https://i20fireworks.herokuapp.com/api/getBrands").then((res) => {
+     Axios.get("/api/getBrands").then((res) => {
       setBrandList(res.data);
     });
 
