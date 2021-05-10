@@ -17,28 +17,28 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-app.get("https://i20fireworks.herokuapp.com//api/getProducts", (req, res) => {
+app.get("https://i20fireworks.herokuapp.com/api/getProducts", (req, res) => {
   const sqlGet = "SELECT * FROM Inventory";
   db.query(sqlGet, (err, result) => {
     res.send(result);
   });
 });
 
-app.get("https://i20fireworks.herokuapp.com//api/getBrands", (req, res) => {
+app.get("https://i20fireworks.herokuapp.com/api/getBrands", (req, res) => {
   const sqlGet = "SELECT * FROM Brands";
   db.query(sqlGet, (err, result) => {
     res.send(result);
   });
 });
 
-app.get("https://i20fireworks.herokuapp.com//api/getCategories", (req, res) => {
+app.get("https://i20fireworks.herokuapp.com/api/getCategories", (req, res) => {
   const sqlGet = "SELECT * FROM Categories";
   db.query(sqlGet, (err, result) => {
     res.send(result);
   });
 });
 
-app.post("https://i20fireworks.herokuapp.com//api/admin/postNew", (req, res) => {
+app.post("https://i20fireworks.herokuapp.com/api/admin/postNew", (req, res) => {
   const name = req.body.name;
   const category = req.body.category;
   const price = req.body.price;
