@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
