@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === "production") {
 app.get("/api/getProducts", (req, res) => {
   const sqlGet = "SELECT * FROM Inventory";
   db.query(sqlGet, (err, result) => {
-    console.log("HITTING API")
+    console.log("ERRORRRRRRR!",err)
     res.send(result);
   });
 });
@@ -72,4 +72,5 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
   console.log("Running on port: " + PORT);
+  console.log("ITS HITTING INDEX.JS@!@@!@!@!@!@!@!@")
 });
