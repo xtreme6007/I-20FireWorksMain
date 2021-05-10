@@ -23,7 +23,7 @@ export default function PostNew() {
 
 // Function used to make apoi call to database to retrive Brands of fireworks  
   const getBrands = () => {
-    Axios.get("https://i20fireworks.herokuapp.com/api/getBrands").then((res) => {
+    Axios.get("/api/getBrands").then((res) => {
        setBrandList(res.data);
        console.log(brandList)
     });
@@ -31,7 +31,7 @@ export default function PostNew() {
   // Function used to make api call to database to retrive Categories of fireworks  
 
     const getCats = () => {
-      Axios.get("https://i20fireworks.herokuapp.com/api/getCategories").then((res) => {
+      Axios.get("/api/getCategories").then((res) => {
        setCategoryList(res.data);
        console.log("CATLIST", categoryList)
     });
@@ -52,7 +52,7 @@ export default function PostNew() {
       files: "",
     },
     onSubmit: (values) => {
-      Axios.post("https://i20fireworks.herokuapp.com/api/admin/postNew", {
+      Axios.post("/api/admin/postNew", {
         name: formik.values.productName,
         category: formik.values.category,
         brand: formik.values.brand,

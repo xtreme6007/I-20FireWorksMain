@@ -64,4 +64,5 @@ app.get("*", function(req, res) {
 
 app.listen(PORT, () => {
   console.log("Running on port" + PORT);
+  console.log("ITS HITTING INDEX.JS@!@@!@!@!@!@!@!@")
 });
