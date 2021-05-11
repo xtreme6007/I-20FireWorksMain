@@ -6,7 +6,7 @@ const mysql = require("mysql");
 const path = require("path");
 const fileUpload = require("express-fileupload");
 const db = mysql.createPool({
-  host: "y5svr1t2r5xudqeq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com	",
+  host: "y5svr1t2r5xudqeq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
   user: "reulpddzj6h6gydn",
   password: "b2joboigxyv0zqfq",
   database: "qf8fqi9h37vnhnbt",
@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-app.get("https://i20fireworks.herokuapp.com/api/getProducts", (req, res) => {
+app.get("/api/getProducts", (req, res) => {
   const sqlGet = "SELECT * FROM Inventory";
   db.query(sqlGet, (err, result) => {
     console.log("ERRORRRRRRR!",err)
@@ -32,21 +32,21 @@ app.get("https://i20fireworks.herokuapp.com/api/getProducts", (req, res) => {
   });
 });
 
-app.get("https://i20fireworks.herokuapp.com/api/getBrands", (req, res) => {
+app.get("/api/getBrands", (req, res) => {
   const sqlGet = "SELECT * FROM Brands";
   db.query(sqlGet, (err, result) => {
     res.send(result);
   });
 });
 
-app.get("https://i20fireworks.herokuapp.com/api/getCategories", (req, res) => {
+app.get("/api/getCategories", (req, res) => {
   const sqlGet = "SELECT * FROM Categories";
   db.query(sqlGet, (err, result) => {
     res.send(result);
   });
 });
 
-app.post("https://i20fireworks.herokuapp.com/api/admin/postNew", (req, res) => {
+app.post("/api/admin/postNew", (req, res) => {
   const name = req.body.name;
   const category = req.body.category;
   const price = req.body.price;
