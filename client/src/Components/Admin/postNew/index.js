@@ -55,7 +55,7 @@ export default function PostNew() {
     onSubmit: (values) => {
       Axios.post("/api/admin/postNew", {
         name: formik.values.productName,
-        category: formik.values.category,
+        category: formik.values.category.toUpperCase(),
         brand: formik.values.brand.toUpperCase(),
         price: formik.values.price,
         previewUrl: formik.values.url,
@@ -100,23 +100,23 @@ export default function PostNew() {
         />
         <br/>
         {/* Category */}
-        <Select
+        <TextField
           id="category"
           name="category"
           type="text"
           onChange={formik.handleChange}
           value={formik.values.category}
           label="Category"
-          style={{width: "30%"}}
-        >
+          // style={{width: "30%"}}
+        />
           {/* Map over categoryList to display values as menu items */}
-            {categoryList.map((cat) => {
+            {/* {categoryList.map((cat) => {
               // {console.log("INSIDE RETURNNNN",cat.Type)}
             return <MenuItem value={cat.Type}>{cat.Type}</MenuItem>
             })}
          
           
-          </Select>
+          </Select> */}
         <br/>
         {/* Price */}
         <TextField
