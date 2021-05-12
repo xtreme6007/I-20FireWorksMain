@@ -7,11 +7,15 @@ import {Auth0Provider} from '@auth0/auth0-react'
 import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history";
  
 
-// const domain = process.env.REACT_APP_AUTH0_DOMAIN
-// const clientId = process.env.REACT_APP_AUTH_CLIENT_ID
+const domain = process.env.REACT_APP_AUTH0_DOMAIN
+const clientId = process.env.REACT_APP_AUTH_CLIENT_ID
 
 ReactDOM.render(
-    <Auth0ProviderWithHistory>
+    <Auth0ProviderWithHistory
+    domain={domain}
+    clientId={clientId}
+    redirectUri={window.location.origin}
+    >
 
     <App />
     </Auth0ProviderWithHistory>

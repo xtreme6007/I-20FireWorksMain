@@ -20,15 +20,11 @@ export default function NavHeader() {
         </Nav>
         <Nav>
           <Nav.Link
-            href="#deets"
             onClick={() => {
               isAuthenticated ? logout() : loginWithRedirect();
             }}
           >
             {isAuthenticated ? "LogOut" : "Login"}
-          </Nav.Link>
-          <Nav.Link eventKey={2} href="#memes">
-            Dank memes
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>
