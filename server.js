@@ -12,7 +12,7 @@ const db = mysql.createPool({
   database: "qf8fqi9h37vnhnbt",
 });
 // const fs = require("fs");
-const PORT = process.env.port || 3001
+const PORT = process.env.PORT || 3001
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-app.get("https://i20fireworks.herokuapp.com/api/getProducts", (req, res) => {
+app.get("/api/getProducts", (req, res) => {
   const sqlGet = "SELECT * FROM Inventory";
   db.query(sqlGet, (err, result) => {
     console.log("ERRORRRRRRR!",err)
@@ -32,14 +32,14 @@ app.get("https://i20fireworks.herokuapp.com/api/getProducts", (req, res) => {
   });
 });
 
-app.get("https://i20fireworks.herokuapp.com/api/getBrands", (req, res) => {
+app.get("/api/getBrands", (req, res) => {
   const sqlGet = "SELECT * FROM Brands";
   db.query(sqlGet, (err, result) => {
     res.send(result);
   });
 });
 
-app.get("https://i20fireworks.herokuapp.com/api/getCategories", (req, res) => {
+app.get("/api/getCategories", (req, res) => {
   const sqlGet = "SELECT * FROM Categories";
   db.query(sqlGet, (err, result) => {
     res.send(result);
