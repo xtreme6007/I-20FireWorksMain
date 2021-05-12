@@ -157,16 +157,16 @@ export default function PrimarySearchAppBar(props) {
           <List component="div" disablePadding>
             <div>
               {brandList.map((item) => (
-                <li key={item.brand_name}>
+                <li key={item.brand}>
                   {" "}
                   <input
                     type="checkbox"
-                    value={item.brand_name}
+                    value={item.brand}
                     onChange={() => {
-                      props.onFilter(item.brand_name)
+                      props.onFilter(item.brand)
                     }}
                   />
-                  {item.brand_name}
+                  {item.brand}
                 </li>
               ))}
             </div>
@@ -189,13 +189,13 @@ export default function PrimarySearchAppBar(props) {
           <List component="div" disablePadding>
             <div>
               {categoryList.map((item) => (
-                <li key={item.Type}>
+                <li key={item.category}>
                   <input
                     type="checkbox"
-                    value={item.Type}
-                    onClick={() => props.categoryFilter(item.Type)}
+                    value={item.category}
+                    onClick={() => props.categoryFilter(item.category)}
                   />
-                  {item.Type}
+                  {item.category}
                 </li>
               ))}
             </div>

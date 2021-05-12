@@ -33,7 +33,7 @@ app.get("/api/getProducts", (req, res) => {
 });
 
 app.get("/api/getBrands", (req, res) => {
-  const sqlGet = "SELECT DISTINCT brand FROM inventory";
+  const sqlGet = "SELECT DISTINCT brand FROM Inventory";
   db.query(sqlGet, (err, result) => {
     console.log("THE API RESULT", result)
     res.send(result);

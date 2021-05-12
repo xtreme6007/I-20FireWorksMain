@@ -56,7 +56,7 @@ export default function PostNew() {
       Axios.post("/api/admin/postNew", {
         name: formik.values.productName,
         category: formik.values.category,
-        brand: formik.values.brand,
+        brand: formik.values.brand.charAt(0).toUpperCase() + formik.values.brand.slice(1),
         price: formik.values.price,
         previewUrl: formik.values.url,
         description: formik.values.description,
