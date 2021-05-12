@@ -24,7 +24,7 @@ function App() {
   const admin = process.env.REACT_APP_ADMIN
   useEffect(() => {
 
-    // console.log("USER", user) 
+     console.log("USER!!!!", user) 
 
   })
 
