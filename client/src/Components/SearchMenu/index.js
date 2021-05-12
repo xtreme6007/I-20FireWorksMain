@@ -108,7 +108,7 @@ export default function PrimarySearchAppBar(props) {
 
   useEffect(  () => {
      Axios.get("https://i20fireworks.herokuapp.com/api/getBrands").then((res) => {
-       console.log("IT HIT!!!!", res.data)
+       console.log("IT HITTTT!!!!",res.data)
       setBrandList(res.data);
     });
 
