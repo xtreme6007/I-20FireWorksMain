@@ -39,7 +39,7 @@ function App() {
             <Landing />
            
           </Route>
-          <Route exact path="/admin/postNew">
+          <Route exact path="/admin/postNew" user={user}>
             { isAuthenticated && user.nickname === admin ?  <PostNew /> : null}
           </Route>
           <Route exact path="/myProfile">
