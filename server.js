@@ -33,14 +33,15 @@ app.get("/api/getProducts", (req, res) => {
 });
 
 app.get("/api/getBrands", (req, res) => {
-  const sqlGet = "SELECT * FROM Brands";
+  const sqlGet = "SELECT DISTINCT brand FROM inventory";
   db.query(sqlGet, (err, result) => {
+    console.log("THE API RESULT", result)
     res.send(result);
   });
 });
 
 app.get("/api/getCategories", (req, res) => {
-  const sqlGet = "SELECT * FROM Categories";
+  const sqlGet = "SELECT DISTINCT category FROM Inventory";
   db.query(sqlGet, (err, result) => {
     res.send(result);
   });

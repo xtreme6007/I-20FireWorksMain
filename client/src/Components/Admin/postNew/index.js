@@ -7,6 +7,7 @@ import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import './index.css'
 
 
 export default function PostNew() {
@@ -95,6 +96,7 @@ export default function PostNew() {
           onChange={formik.handleChange}
           value={formik.values.brand}
           label="Brand"
+          className = "capitalize"
         />
         <br/>
         {/* Category */}
