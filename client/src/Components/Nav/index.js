@@ -19,13 +19,7 @@ export default function NavHeader() {
           ) : null}
         </Nav>
         <Nav>
-          <Nav.Link
-            onClick={() => {
-              isAuthenticated ? logout() : loginWithRedirect();
-            }}
-          >
-            {isAuthenticated ? "LogOut" : "Login"}
-          </Nav.Link>
+          <Nav.Link href="/login">Login</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
 const cors = require("cors");
 const app = express();
 const mysql = require("mysql");
@@ -11,12 +13,33 @@ const db = mysql.createPool({
   password: "b2joboigxyv0zqfq",
   database: "qf8fqi9h37vnhnbt",
 });
-// const fs = require("fs");
+const bcrypt = require("bcrypt");
+
+const saltRounds = 10
+
+
 const PORT = process.env.PORT || 3001
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:3000", "https://i20fireworks.herokuapp.com/"],
+  method: ["GET", "POST"],
+  credentials: true
+}));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
+
+
+app.use(session({
+  key: "userId",
+  secret: "keyboard cat",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    expires: 60 * 60 * 24
+  }
+}))
+
 
 
 
@@ -35,7 +58,6 @@ app.get("/api/getProducts", (req, res) => {
 app.get("/api/getBrands", (req, res) => {
   const sqlGet = "SELECT DISTINCT brand FROM Inventory";
   db.query(sqlGet, (err, result) => {
-    console.log("THE API RESULT", result)
     res.send(result);
   });
 });
@@ -46,6 +68,82 @@ app.get("/api/getCategories", (req, res) => {
     res.send(result);
   });
 });
+
+
+app.get("/api/login", (req,res) => {
+  if(req.session.user){
+    res.send({LoggedIn: true, User: req.session.user})
+  } else {
+    res.send({LoggedIn: false})
+  }
+})
+
+app.post("/api/login", (req, res) => {
+  const user_name = req.body.user_name;
+  const password = req.body.password;
+ 
+  const userLogin =
+    "SELECT * FROM user WHERE user_name = ?;";
+  db.query(
+    userLogin,
+    user_name,
+    (err, result) => {
+      if(err){
+        res.send({err : err})
+      }
+
+      if(result.length > 0){
+        bcrypt.compare(password, result[0].password, (error, response) => {
+          if(response){
+          req.session.user = result
+            console.log("SESSIONNNN", req.session.user)
+          res.send(result)
+          } else {
+            res.send({message : "Wrong Username or Password"})
+          }
+        })
+      } else {
+        res.send({message: "User Does Not exist"})
+        
+      }
+      console.log(result);
+    }
+  );
+});
+
+
+
+
+
+app.post("/api/register", (req, res) => {
+  const user_name = req.body.user_name;
+  const email = req.body.email;
+  const first_name = req.body.first_name;
+  const last_name = req.body.last_name;
+  const password = req.body.password;
+  const role = req.body.role;
+ 
+  const sqlInsert =
+    "INSERT INTO user (user_name, email, first_name, last_name, password, role) VALUES (?,?,?,?,?,?)";
+
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    if(err){
+      console.log(err)
+    }
+    db.query(
+      sqlInsert,
+      [user_name, email, first_name, last_name, hash, role],
+      (err, result) => {
+        console.log("ERRORRR", err)
+        console.log(result);
+      }
+    );
+
+  })
+  
+});
+
+
 
 app.post("/api/admin/postNew", (req, res) => {
   const name = req.body.name;
@@ -65,6 +163,8 @@ app.post("/api/admin/postNew", (req, res) => {
     }
   );
 });
+
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client/build', 'index.html'));

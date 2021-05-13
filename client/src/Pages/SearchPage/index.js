@@ -14,10 +14,19 @@ export default function SearchPage() {
   const [checked, setChecked] = useState({});
   const [query, setQuery] = useState("")
   const [queryFilter, setQueryFilter] = useState("")
+  const [logedInStatus, setLogedInStatus] = useState([])
+
 
 
   useEffect(() => {
-    Axios.get("https://i20fireworks.herokuapp.com/api/getProducts").then((response) => {
+    Axios.get("/api/login").then((response)=> {
+      // console.log(response)
+      if(response.data.LoggedIn == true){
+          setLogedInStatus(response.data.User[0].user_name)
+      }
+  })
+
+    Axios.get("/api/getProducts").then((response) => {
       console.log(response.data);
       setProductList(response.data);
     });
@@ -68,6 +77,10 @@ export default function SearchPage() {
       setQueryFilter(query)
 
   }
+
+  useEffect(() => {
+    console.log("Logged in status", logedInStatus)
+  })
 
   return (
     <>
