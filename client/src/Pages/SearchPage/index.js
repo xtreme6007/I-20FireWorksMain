@@ -20,18 +20,14 @@ export default function SearchPage() {
 
   useEffect(() => {
     Axios.get("/api/login").then((response)=> {
-      // console.log(response)
       if(response.data.LoggedIn == true){
           setLogedInStatus(response.data.User[0].user_name)
       }
   })
 
     Axios.get("/api/getProducts").then((response) => {
-      console.log(response.data);
       setProductList(response.data);
     });
-    console.log("QUERY",query)
-    console.log("QUERY FILTER", queryFilter)
   }, [brandFilter, categoryFilter]);
 
   const onFilterBrand = (brand) => {
@@ -42,7 +38,6 @@ export default function SearchPage() {
           return val;
         });
       setBrandFilter(newList);
-      console.log("NewList", newList);
     } else {
       setBrandFilter([...brandFilter, brand]);
     }
@@ -56,11 +51,9 @@ export default function SearchPage() {
           return val;
         });
       setCategoryFilter(newList);
-      console.log("NewList", newList);
     } else {
       setCategoryFilter([...categoryFilter, category]);
     }
-    console.log(categoryFilter);
   };
 
   const handleDrawer = () => {
@@ -69,7 +62,6 @@ export default function SearchPage() {
   };
   const handleSearchChange = (q) => {
         setQuery(q)
-        console.log(query)
   }
   const handleSearchSubmit = () => {
       setBrandFilter([])
@@ -78,9 +70,7 @@ export default function SearchPage() {
 
   }
 
-  useEffect(() => {
-    console.log("Logged in status", logedInStatus)
-  })
+
 
   return (
     <>

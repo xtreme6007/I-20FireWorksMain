@@ -50,7 +50,6 @@ if (process.env.NODE_ENV === "production") {
 app.get("/api/getProducts", (req, res) => {
   const sqlGet = "SELECT * FROM Inventory";
   db.query(sqlGet, (err, result) => {
-    console.log("ERRORRRRRRR!",err)
     res.send(result);
   });
 });
@@ -96,7 +95,6 @@ app.post("/api/login", (req, res) => {
         bcrypt.compare(password, result[0].password, (error, response) => {
           if(response){
           req.session.user = result
-            console.log("SESSIONNNN", req.session.user)
           res.send(result)
           } else {
             res.send({message : "Wrong Username or Password"})
@@ -106,7 +104,6 @@ app.post("/api/login", (req, res) => {
         res.send({message: "User Does Not exist"})
         
       }
-      console.log(result);
     }
   );
 });
@@ -128,14 +125,11 @@ app.post("/api/register", (req, res) => {
 
   bcrypt.hash(password, saltRounds, (err, hash) => {
     if(err){
-      console.log(err)
     }
     db.query(
       sqlInsert,
       [user_name, email, first_name, last_name, hash, role],
       (err, result) => {
-        console.log("ERRORRR", err)
-        console.log(result);
       }
     );
 
@@ -152,14 +146,19 @@ app.post("/api/admin/postNew", (req, res) => {
   const previewUrl = req.body.previewUrl;
   const description = req.body.description;
   const brand = req.body.brand
+  const units = req.body.units
+  const paid = req.body.paid
+  const unit_paid = (paid / units).toFixed(2)
+  const unit_price = ((unit_paid * 3)  * 1.0825).toFixed(2)
+  const profit = (unit_price - unit_paid).toFixed(2)
 
   const sqlInsert =
-    "INSERT INTO Inventory (name, category, price, preview_link, description, brand) VALUES (?,?,?,?,?,?)";
+    "INSERT INTO Inventory (name, category, price, preview_link, description, brand, units, unit_price, paid_amount, profit, unit_paid) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
   db.query(
     sqlInsert,
-    [name, category, price, previewUrl, description, brand],
+    [name, category, price, previewUrl, description, brand, units, unit_price, paid, profit,unit_paid],
     (err, result) => {
-      console.log(result);
+      console.log(err)
     }
   );
 });

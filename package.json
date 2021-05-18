@@ -17,7 +17,7 @@
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
-  "author": "",
+  "author": "Preston Nichols",
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.11.4",

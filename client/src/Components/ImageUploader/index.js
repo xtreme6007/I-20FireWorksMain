@@ -13,10 +13,7 @@ export default function ImageUploader(prodName, { defaultImage }) {
   }
 
   function handleFiles(files) {
-    console.log("handleFiles");
-    console.log(files);
     for (let i = 0; i < files.length; i++) {
-      console.log(files[i]);
       uploadFile(files[i]);
     }
   }
@@ -31,7 +28,6 @@ export default function ImageUploader(prodName, { defaultImage }) {
     // Update progress (can be used to show progress indicator)
     xhr.upload.addEventListener("progress", (e) => {
       setProgress(Math.round((e.loaded * 100.0) / e.total));
-      console.log(Math.round((e.loaded * 100.0) / e.total));
     });
 
     xhr.onreadystatechange = (e) => {
@@ -39,7 +35,6 @@ export default function ImageUploader(prodName, { defaultImage }) {
         const response = JSON.parse(xhr.responseText);
 
         setImage(response.secure_url);
-        console.log(response.secure_url);
       }
     };
 
@@ -59,7 +54,6 @@ export default function ImageUploader(prodName, { defaultImage }) {
   }
 
   function handleSave() {
-    console.log(image);
     alert(image);
   }
 

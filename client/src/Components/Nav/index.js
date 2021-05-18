@@ -10,7 +10,6 @@ export default function NavHeader() {
 
   useEffect(() => {
     Axios.get("/api/login").then((response)=> {
-      // console.log(response)
       if(response.data.LoggedIn == true){
           setLogedInStatus(response.data.User[0].user_name)
       }
@@ -29,7 +28,10 @@ export default function NavHeader() {
           ) : null}
         </Nav>
         <Nav>
-          <Nav.Link href="/login">Login</Nav.Link>
+          { logedInStatus == "" || !logedInStatus ?
+          <Nav.Link href="/login">Login</Nav.Link> :
+          null
+}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

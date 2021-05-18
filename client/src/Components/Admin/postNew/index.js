@@ -26,7 +26,6 @@ export default function PostNew() {
   const getBrands = () => {
     Axios.get("/api/getBrands").then((res) => {
        setBrandList(res.data);
-       console.log(brandList)
     });
   }
   // Function used to make api call to database to retrive Categories of fireworks  
@@ -34,7 +33,6 @@ export default function PostNew() {
     const getCats = () => {
       Axios.get("/api/getCategories").then((res) => {
        setCategoryList(res.data);
-       console.log("CATLIST", categoryList)
     });
 
     }
@@ -51,6 +49,8 @@ export default function PostNew() {
       price: "",
       url: "",
       files: "",
+      unit_amount: "",
+      paid: "",
     },
     onSubmit: (values) => {
       Axios.post("/api/admin/postNew", {
@@ -60,6 +60,8 @@ export default function PostNew() {
         price: formik.values.price,
         previewUrl: formik.values.url,
         description: formik.values.description,
+        units: formik.values.unit_amount,
+        paid: formik.values.paid
       });
     },
   });
@@ -109,14 +111,7 @@ export default function PostNew() {
           label="Category"
           // style={{width: "30%"}}
         />
-          {/* Map over categoryList to display values as menu items */}
-            {/* {categoryList.map((cat) => {
-              // {console.log("INSIDE RETURNNNN",cat.Type)}
-            return <MenuItem value={cat.Type}>{cat.Type}</MenuItem>
-            })}
          
-          
-          </Select> */}
         <br/>
         {/* Price */}
         <TextField
@@ -125,7 +120,7 @@ export default function PostNew() {
           type="text"
           onChange={formik.handleChange}
           value={formik.values.price}
-          label="Price"
+          label="Total Package Price"
         />
           <br/>
           {/* Preview Url */}
@@ -138,6 +133,24 @@ export default function PostNew() {
           label="Preview Url"
         />
           <br/>
+          <TextField
+          id="unit_amount"
+          name="unit_amount"
+          type="text"
+          onChange={formik.handleChange}
+          value={formik.values.unit_amount}
+          label="How many Units?"
+        />
+        <br/>
+        <TextField
+          id="paid"
+          name="paid"
+          type="text"
+          onChange={formik.handleChange}
+          value={formik.values.paid}
+          label="How much did we pay?"
+        />
+        <br/>
           {/* Component used to upload image */}
         <ImageUploader
           prodName={formik.values.productName}

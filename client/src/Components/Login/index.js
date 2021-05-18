@@ -16,10 +16,6 @@ export default function Login() {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-      console.log(open)
-
-  },[])
 
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -59,10 +55,6 @@ export default function Login() {
           type="submit"
           onClick={(e) => {
             e.preventDefault()
-            // if(loginSuccess === true){
-            //     window.location.replace("http://localhost:3000");
-                
-            // }
             
             Axios.post("/api/login", {
               user_name: userName,
@@ -71,7 +63,6 @@ export default function Login() {
             setOpen(true)
             if(res.data.message !== "User Does Not exist" && res.data.message !== "Wrong Username or Password" ) {
               setLoginSuccess(true)
-              console.log(res);
               window.location.replace("/");
             }
             });

@@ -17,6 +17,7 @@ import SearchPage from './Pages/SearchPage'
 import MyProfile from './Pages/MyProfile'
 import Login from './Components/Login'
 import Registration from "./Components/Registration"
+import ProdView from "./Components/Admin/prodView"
 
 Axios.defaults.withCredentials = true;
 
@@ -27,10 +28,8 @@ function App() {
 
     useEffect(() => {
         Axios.get("/api/login").then((response)=> {
-            // console.log(response)
             if(response.data.LoggedIn == true){
                 setLogedInStatus(response.data.User[0].user_name)
-                console.log("Logged in status", logedInStatus)
             }
         })
       }, []);
@@ -55,6 +54,10 @@ function App() {
           </Route>
           <Route exact path="/register">
           <Registration />
+
+          </Route>
+          <Route exact path="/admin/viewProd">
+          <ProdView />
 
           </Route>
 

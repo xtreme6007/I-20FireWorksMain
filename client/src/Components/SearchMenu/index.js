@@ -108,7 +108,6 @@ export default function PrimarySearchAppBar(props) {
 
   useEffect(  () => {
      Axios.get("/api/getBrands").then((res) => {
-       console.log("IT HITTTT!!!!",res.data)
       setBrandList(res.data);
     });
 
