@@ -21,6 +21,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import Axios from "axios";
 
+// Definingt Styles
 const useStyles = makeStyles((theme) => ({
   list: {
     width: 250,
@@ -105,7 +106,7 @@ export default function PrimarySearchAppBar(props) {
   const [brandList, setBrandList] = useState([]);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+// Get Brands and Categories on Component Load
   useEffect(  () => {
      Axios.get("/api/getBrands").then((res) => {
       setBrandList(res.data);
@@ -115,7 +116,7 @@ export default function PrimarySearchAppBar(props) {
       setCategoryList(res.data);
     });
   },[]);
-
+// Used to open and close drawer
   const toggleDrawer = (anchor, openDrawer) => (event) => {
     if (
       event.type === "keydown" &&
@@ -128,7 +129,7 @@ export default function PrimarySearchAppBar(props) {
       props.drawerHandle();
     }
   };
-
+// Used to open Brand Sub menu
   const handleClick = () => {
     setOpenBrand(!openBrand);
   };

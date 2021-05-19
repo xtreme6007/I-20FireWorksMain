@@ -25,7 +25,7 @@ function App() {
   const {loginWithRedirect, user, isAuthenticated, getAccessTokenWithPopup} = useAuth0()
   const admin = process.env.REACT_APP_ADMIN
   const [logedInStatus, setLogedInStatus] = useState("")
-
+// CHecking Login Status upon page loading
     useEffect(() => {
         Axios.get("/api/login").then((response)=> {
             if(response.data.LoggedIn == true){
@@ -45,8 +45,11 @@ function App() {
             <Landing />
            
           </Route>
-          <Route exact path="/admin/postNew" user={user}>
+          <Route exact path="/admin/postNew">
             { logedInStatus === "Preston_Nichols" ?  <PostNew /> : null}
+          </Route>
+          <Route exact path="/admin/viewProd">
+            { logedInStatus === "Preston_Nichols" ?   <ProdView /> : null}
           </Route>
           <Route exact path="/myProfile">
           { isAuthenticated ?  <MyProfile  user= {user}/> : null}

@@ -11,7 +11,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import PrimarySearchAppBar from "../../../Components/SearchMenu";
-
+// Defining Columns for Table
 const columns = [
   { id: "id", label: "I.D.", minWidth: 100 },
   { id: "name", label: "Name", minWidth: 170 },
@@ -81,7 +81,7 @@ const columns = [
   },
 ];
 
-
+// Defining Styles
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -101,8 +101,11 @@ export default function StickyHeadTable() {
   const [categoryFilter, setCategoryFilter] = useState([]);
   const [query, setQuery] = useState("");
   const [queryFilter, setQueryFilter] = useState("");
+  // Constant variable for rows of table
+  const rows = [];
 
   useEffect(() => {
+    // API Call to get all prducts on page load
     Axios.get("/api/getProducts").then((response) => {
       setProductList(response.data);
       console.log("Response", response.data);
@@ -110,13 +113,13 @@ export default function StickyHeadTable() {
     });
   }, []);
 
-
+//Function to create data for rows of table
   function createData(id,name,brand,category,preview,totalPrice,Price_Per_Unit, units_per_pack, profit,active,unit_paid_price) {
-    //  console.log("PRICE_PER_UNIT", Price_Per_Unit)
+ 
     return {id,name,brand,category,preview,totalPrice,Price_Per_Unit, units_per_pack, profit,active,unit_paid_price};
   }
 
-const rows = [];
+// For loop to loop ove product list array and push data to rows constant
 for (var i = 0; i < productList.length ; i++){
 
   if (
@@ -127,7 +130,7 @@ for (var i = 0; i < productList.length ; i++){
   }
 }
 
-
+// Function Used to filter by Brand
   const onFilterBrand = (brand) => {
     if (brandFilter.includes(brand)) {
       const newList = brandFilter
@@ -140,7 +143,7 @@ for (var i = 0; i < productList.length ; i++){
       setBrandFilter([...brandFilter, brand]);
     }
   };
-
+// Function Used to fitler by category
   const onFilterCategory = (category) => {
     if (categoryFilter.includes(category)) {
       const newList = categoryFilter
@@ -153,24 +156,26 @@ for (var i = 0; i < productList.length ; i++){
       setCategoryFilter([...categoryFilter, category]);
     }
   };
-
+// Function Used to reset all filters and page
   const handleDrawer = () => {
     setBrandFilter([]);
     setCategoryFilter([]);
+    setPage(0)
   };
+  // Function used to set query for search bar
   const handleSearchChange = (q) => {
     setQuery(q);
   };
+  //Function used to reset
   const handleSearchSubmit = () => {
-    setBrandFilter([]);
-    setCategoryFilter([]);
+    handleDrawer();
     setQueryFilter(query);
   };
-
+// Function used for Changing Pages
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
+// Function used to change rows based on current page
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);

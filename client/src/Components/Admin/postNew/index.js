@@ -11,47 +11,7 @@ import './index.css'
 
 
 export default function PostNew() {
-  const [brandList, setBrandList] = useState([]);
-  const [categoryList, setCategoryList] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false)
-
-
-  
-  useEffect( () => {
-    getBrands()
-    getCats()
-    console.log(submitSuccess)
-      
-  },[]);
-
-  function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-  }
-
-// Function used to make apoi call to database to retrive Brands of fireworks  
-  const getBrands = () => {
-    Axios.get("/api/getBrands").then((res) => {
-       setBrandList(res.data);
-    });
-  }
-  // Function used to make api call to database to retrive Categories of fireworks  
-
-    const getCats = () => {
-      Axios.get("/api/getCategories").then((res) => {
-       setCategoryList(res.data);
-    });
-
-    }
-    
-    const handleClose = (event, reason) => {
-      if (reason === 'clickaway') {
-        return;
-      }
-  
-      setOpen(false);
-    };
-
+// Function used to post formik form
     const post = () => {
       Axios.post("/api/admin/postNew", {
         name: formik.values.productName,
@@ -68,7 +28,7 @@ export default function PostNew() {
       
     }
   
-
+// Setting inital Values for formik
   const formik = useFormik({
     initialValues: {
       productName: "",
@@ -175,21 +135,6 @@ export default function PostNew() {
 
         <button type="submit">Submit</button>
       </form>
-
-      {open === true ? (
-          submitSuccess === true ?
-        (<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="success">
-            Successfuly Loged In!
-          </Alert>
-        </Snackbar>)
-        : 
-        (<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="error">
-            Username/Password is not correct
-          </Alert>
-        </Snackbar>)
-      ) : null}
     </Container>
   );
 }

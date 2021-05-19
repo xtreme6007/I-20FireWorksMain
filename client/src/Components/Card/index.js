@@ -13,7 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Cloudinary } from "cloudinary-core";
 
 const cloudinaryCore = new Cloudinary({ cloud_name: "prestonscloud" });
-
+// Defining Styles
 const useStyles = makeStyles({
   root: {
     maxWidth: "100%",
@@ -43,7 +43,6 @@ export default function CustomCard(props) {
               />
             </div>
 
-            {/* <img src={CLOUDINARY_UPLOAD_URL + '/' + val.name} /> */}
             <CardContent>
               <Typography
                 gutterBottom

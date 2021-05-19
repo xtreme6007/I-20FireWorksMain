@@ -4,12 +4,30 @@ import Axios from "axios";
 import { useFormik } from "formik";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from '@material-ui/lab/Alert';
 
 Axios.defaults.withCredentials = true
 
 export default function Registration() {
- 
 
+  const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [open, setOpen] = useState(false);
+
+// Defining alert for Snack Bar
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+// Function to handle closing of Snack Bar Notification
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+ 
+// Defining inital formik Values
   const formik = useFormik({
     initialValues: {
       user_name: "",
@@ -20,6 +38,7 @@ export default function Registration() {
       role: "Customer"
     },
     onSubmit: (values) => {
+      // Api Call to register user
       Axios.post("/api/register", {
         user_name: formik.values.user_name,
         email: formik.values.email,
@@ -27,7 +46,13 @@ export default function Registration() {
         last_name: formik.values.last_name,
         password: formik.values.password,
         role: formik.values.role,
-      });
+      }).then((res) => {
+        setOpen(true)
+        if(res.data.message !== "User Does Not exist" && res.data.message !== "Wrong Username or Password" ) {
+          setRegisterSuccess(true)
+          window.location.replace("/");
+        }
+        });
     },
   });
 
@@ -94,6 +119,21 @@ export default function Registration() {
         <br />
         <button type="submit">Submit</button>
       </form>
+
+      {open === true ? (
+          registerSuccess === true ?
+        (<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success">
+            Successfuly Loged In!
+          </Alert>
+        </Snackbar>)
+        : 
+        (<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="error">
+            Username/Password is not correct
+          </Alert>
+        </Snackbar>)
+      ) : null}
     </Container>
   );
 }

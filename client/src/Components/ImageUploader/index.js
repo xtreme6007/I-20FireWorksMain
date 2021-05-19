@@ -17,7 +17,7 @@ export default function ImageUploader(prodName, { defaultImage }) {
       uploadFile(files[i]);
     }
   }
-
+// Function used to uplaod files
   function uploadFile(file) {
     const url = `https://api.cloudinary.com/v1_1/prestoncloud/upload`;
     const xhr = new XMLHttpRequest();

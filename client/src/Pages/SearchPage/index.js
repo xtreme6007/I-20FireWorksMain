@@ -17,7 +17,7 @@ export default function SearchPage() {
   const [logedInStatus, setLogedInStatus] = useState([])
 
 
-
+// Check if user is loged in (non logged in users can still view products) and get all prodcuts on page load
   useEffect(() => {
     Axios.get("/api/login").then((response)=> {
       if(response.data.LoggedIn == true){
@@ -29,7 +29,7 @@ export default function SearchPage() {
       setProductList(response.data);
     });
   }, [brandFilter, categoryFilter]);
-
+// Used to filter results by Brand
   const onFilterBrand = (brand) => {
     if (brandFilter.includes(brand)) {
       const newList = brandFilter
@@ -42,7 +42,7 @@ export default function SearchPage() {
       setBrandFilter([...brandFilter, brand]);
     }
   };
-
+// Used to filter results by Category
   const onFilterCategory = (category) => {
     if (categoryFilter.includes(category)) {
       const newList = categoryFilter
@@ -55,14 +55,16 @@ export default function SearchPage() {
       setCategoryFilter([...categoryFilter, category]);
     }
   };
-
+// Used to set all filters to empty
   const handleDrawer = () => {
     setBrandFilter([]);
     setCategoryFilter([]);
   };
+  // Used when search box value changes
   const handleSearchChange = (q) => {
         setQuery(q)
   }
+  //Used when User submits a search
   const handleSearchSubmit = () => {
       setBrandFilter([])
       setCategoryFilter([])

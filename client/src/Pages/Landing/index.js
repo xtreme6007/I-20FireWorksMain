@@ -20,12 +20,9 @@ export default function Landing() {
         <h1>I-20 Fireworks</h1>
         <p>
           Located in Van Texas we are a locally owned firework stand with the
-          goal of serving the DFW communitys as convient as possible. With that
-          goal we are proud to announce that we will be offering delivery to
-          most DFW locations this season. With an assortment of options from
+          goal of serving the DFW communitys as convient as possible. With an assortment of options from
           Noveltiey Items, Fountains, Amazing Aerial Explosions and more we
-          gurantee our products are of the higesht quality. In order to place an
-          order checkout the how it works tab.
+          gurantee our products are of the higesht quality.
         </p>
         <div className="hero-btns">
           {/* <button>How It Works</button> */}

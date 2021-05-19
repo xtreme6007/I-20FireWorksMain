@@ -14,11 +14,12 @@ const db = mysql.createPool({
   database: "qf8fqi9h37vnhnbt",
 });
 const bcrypt = require("bcrypt");
-
+// Defining salt Rounds for bCrypt
 const saltRounds = 10
 
 
 const PORT = process.env.PORT || 3001
+// Setting up CORS
 app.use(cors({
   origin: ["http://localhost:3000", "https://i20fireworks.herokuapp.com/"],
   method: ["GET", "POST"],
@@ -29,7 +30,7 @@ app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 
-
+// Setting Up Express session 
 app.use(session({
   key: "userId",
   secret: "keyboard cat",
@@ -42,25 +43,25 @@ app.use(session({
 
 
 
-
+// Serving Up Static Build file When in production Mode
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-
+// Api Call for getting all products
 app.get("/api/getProducts", (req, res) => {
   const sqlGet = "SELECT * FROM Inventory";
   db.query(sqlGet, (err, result) => {
     res.send(result);
   });
 });
-
+// Api Call for getting all Brands
 app.get("/api/getBrands", (req, res) => {
   const sqlGet = "SELECT DISTINCT brand FROM Inventory";
   db.query(sqlGet, (err, result) => {
     res.send(result);
   });
 });
-
+// Api call for getting all categories
 app.get("/api/getCategories", (req, res) => {
   const sqlGet = "SELECT DISTINCT category FROM Inventory";
   db.query(sqlGet, (err, result) => {
@@ -68,7 +69,7 @@ app.get("/api/getCategories", (req, res) => {
   });
 });
 
-
+// Api used to check logIn status
 app.get("/api/login", (req,res) => {
   if(req.session.user){
     res.send({LoggedIn: true, User: req.session.user})
@@ -76,7 +77,7 @@ app.get("/api/login", (req,res) => {
     res.send({LoggedIn: false})
   }
 })
-
+// Api used to log in to application
 app.post("/api/login", (req, res) => {
   const user_name = req.body.user_name;
   const password = req.body.password;
@@ -110,7 +111,7 @@ app.post("/api/login", (req, res) => {
 
 
 
-
+// Api Used to register for the application
 
 app.post("/api/register", (req, res) => {
   const user_name = req.body.user_name;
@@ -122,9 +123,10 @@ app.post("/api/register", (req, res) => {
  
   const sqlInsert =
     "INSERT INTO user (user_name, email, first_name, last_name, password, role) VALUES (?,?,?,?,?,?)";
-
+// Hasing Password in database
   bcrypt.hash(password, saltRounds, (err, hash) => {
     if(err){
+      console.log(err)
     }
     db.query(
       sqlInsert,
@@ -135,10 +137,11 @@ app.post("/api/register", (req, res) => {
 
   })
   
+  
 });
 
 
-
+// Api Used to post a new Product
 app.post("/api/admin/postNew", (req, res) => {
   const name = req.body.name;
   const category = req.body.category;

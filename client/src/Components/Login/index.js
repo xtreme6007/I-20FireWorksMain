@@ -16,11 +16,11 @@ export default function Login() {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [open, setOpen] = useState(false);
 
-
+// Defining alert for Snack Bar
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
-
+// Function to handle closing of Snack Bar Notification
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
