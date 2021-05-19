@@ -95,7 +95,7 @@ export default function SearchPage() {
                   name={val.name}
                   preview_link={val.preview_link}
                   description={val.description && val.description}
-                  price={val.price && val.price}
+                  price={val.unit_price && val.unit_price}
                   brand={val.brand}
                   category={val.category}
                 />

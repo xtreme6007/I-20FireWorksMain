@@ -81,15 +81,15 @@ export default function PostNew() {
         />
         <br/>
 {/* Description  */}
-        <TextField
-          id="description"
-          name="description"
+        {/* <TextField
+          id="ategory"
+          name="category"
           type="text"
           onChange={formik.handleChange}
-          value={formik.values.description}
-          label="Description"
+          value={formik.values.category}
+          label="Category"
         />
-<br/>
+<br/> */}
 {/* Brand */}
         <TextField
           id="brand"
@@ -120,7 +120,7 @@ export default function PostNew() {
           type="text"
           onChange={formik.handleChange}
           value={formik.values.price}
-          label="Total Package Price"
+          label="Total Case Price"
         />
           <br/>
           {/* Preview Url */}
@@ -141,21 +141,14 @@ export default function PostNew() {
           value={formik.values.unit_amount}
           label="How many Units?"
         />
-        <br/>
-        <TextField
-          id="paid"
-          name="paid"
-          type="text"
-          onChange={formik.handleChange}
-          value={formik.values.paid}
-          label="How much did we pay?"
-        />
+    
         <br/>
           {/* Component used to upload image */}
         <ImageUploader
           prodName={formik.values.productName}
           value={formik.values.files}
           onChange={formik.handleChange}
+          style={{marginLeft: "15%"}}
         />
 
         <button type="submit">Submit</button>

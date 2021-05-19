@@ -41,7 +41,7 @@ export default function Login() {
         ></TextField>
         <br />
         <TextField
-          type="text"
+          type="password"
           label="Password"
           onChange={(e) => {
             setPassword(e.target.value);

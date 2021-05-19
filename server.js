@@ -147,16 +147,15 @@ app.post("/api/admin/postNew", (req, res) => {
   const description = req.body.description;
   const brand = req.body.brand
   const units = req.body.units
-  const paid = req.body.paid
-  const unit_paid = (paid / units).toFixed(2)
+  const unit_paid = (price / units).toFixed(2)
   const unit_price = ((unit_paid * 3)  * 1.0825).toFixed(2)
   const profit = (unit_price - unit_paid).toFixed(2)
 
   const sqlInsert =
-    "INSERT INTO Inventory (name, category, price, preview_link, description, brand, units, unit_price, paid_amount, profit, unit_paid) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+    "INSERT INTO Inventory (name, category, price, preview_link, description, brand, units, unit_price, profit, unit_paid) VALUES (?,?,?,?,?,?,?,?,?,?)";
   db.query(
     sqlInsert,
-    [name, category, price, previewUrl, description, brand, units, unit_price, paid, profit,unit_paid],
+    [name, category, price, previewUrl, description, brand, units, unit_price, profit,unit_paid],
     (err, result) => {
       console.log(err)
     }
