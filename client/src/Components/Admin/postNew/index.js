@@ -5,22 +5,29 @@ import ImageUploader from "../../ImageUploader";
 import { useFormik } from "formik";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from '@material-ui/lab/Alert';
 import './index.css'
 
 
 export default function PostNew() {
   const [brandList, setBrandList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
- 
+  const [open, setOpen] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+
 
   
   useEffect( () => {
     getBrands()
     getCats()
+    console.log(submitSuccess)
       
   },[]);
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
 
 // Function used to make apoi call to database to retrive Brands of fireworks  
   const getBrands = () => {
@@ -37,7 +44,29 @@ export default function PostNew() {
 
     }
     
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
 
+    const post = () => {
+      Axios.post("/api/admin/postNew", {
+        name: formik.values.productName,
+        category: formik.values.category.toUpperCase(),
+        brand: formik.values.brand.toUpperCase(),
+        price: formik.values.price,
+        previewUrl: formik.values.url,
+        description: formik.values.description,
+        units: formik.values.unit_amount,
+        paid: formik.values.paid
+      }).then((res) => {
+        console.log("hellooo")
+      })
+      
+    }
   
 
   const formik = useFormik({
@@ -53,16 +82,9 @@ export default function PostNew() {
       paid: "",
     },
     onSubmit: (values) => {
-      Axios.post("/api/admin/postNew", {
-        name: formik.values.productName,
-        category: formik.values.category.toUpperCase(),
-        brand: formik.values.brand.toUpperCase(),
-        price: formik.values.price,
-        previewUrl: formik.values.url,
-        description: formik.values.description,
-        units: formik.values.unit_amount,
-        paid: formik.values.paid
-      });
+      post()
+      window.location.replace("/admin/viewProd");
+
     },
   });
 
@@ -153,6 +175,21 @@ export default function PostNew() {
 
         <button type="submit">Submit</button>
       </form>
+
+      {open === true ? (
+          submitSuccess === true ?
+        (<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success">
+            Successfuly Loged In!
+          </Alert>
+        </Snackbar>)
+        : 
+        (<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="error">
+            Username/Password is not correct
+          </Alert>
+        </Snackbar>)
+      ) : null}
     </Container>
   );
 }
