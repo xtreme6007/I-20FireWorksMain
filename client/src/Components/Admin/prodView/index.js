@@ -1,120 +1,3 @@
-// import Axios from "axios";
-// import { useEffect, useState } from "react";
-// import React from "react";
-// import Table from "react-bootstrap/Table";
-// import PrimarySearchAppBar from "../../../Components/SearchMenu";
-
-// export default function ProdView() {
-//   const [productList, setProductList] = useState([]);
-//   const [brandFilter, setBrandFilter] = useState([]);
-//   const [categoryFilter, setCategoryFilter] = useState([]);
-//   const [query, setQuery] = useState("")
-//   const [queryFilter, setQueryFilter] = useState("")
-
-//   useEffect(() => {
-//     Axios.get("/api/getProducts").then((response) => {
-//       setProductList(response.data);
-//       console.log("Response", response.data);
-//       console.log("List", productList);
-//     });
-//   }, []);
-
-//   const onFilterBrand = (brand) => {
-//     if (brandFilter.includes(brand)) {
-//       const newList = brandFilter
-//         .filter((name) => name != brand)
-//         .map((val) => {
-//           return val;
-//         });
-//       setBrandFilter(newList);
-//     } else {
-//       setBrandFilter([...brandFilter, brand]);
-//     }
-//   };
-
-//   const onFilterCategory = (category) => {
-//     if (categoryFilter.includes(category)) {
-//       const newList = categoryFilter
-//         .filter((name) => name != category)
-//         .map((val) => {
-//           return val;
-//         });
-//       setCategoryFilter(newList);
-//     } else {
-//       setCategoryFilter([...categoryFilter, category]);
-//     }
-//   };
-
-//   const handleDrawer = () => {
-//     setBrandFilter([]);
-//     setCategoryFilter([]);
-//   };
-//   const handleSearchChange = (q) => {
-//     setQuery(q);
-//   };
-//   const handleSearchSubmit = () => {
-//     setBrandFilter([]);
-//     setCategoryFilter([]);
-//     setQueryFilter(query);
-//   };
-
-//   return (
-//     <>
-//       <PrimarySearchAppBar
-//         onFilter={onFilterBrand}
-//         brandFilter={brandFilter}
-//         categoryFilter={onFilterCategory}
-//         drawerHandle={handleDrawer}
-//         query={handleSearchChange}
-//         searchSubmit={handleSearchSubmit}
-//       />
-//       <Table responsive bordered hover>
-//         <thead>
-//           <tr>
-//             <th>I.D.</th>
-//             <th>Name</th>
-//             <th>Brand</th>
-//             <th>Category</th>
-//             <th>Preview Link</th>
-//             <th>Total Price</th>
-//             <th>Price Per Unit `(what we charge)`</th>
-//             <th>Description</th>
-//             <th>Profit</th>
-//             <th>Units per pack</th>
-//             <th>Active</th>
-//             <th>Unit Paid Price</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {productList.map((item) => {
-//               if (
-//                 (brandFilter.includes(item.brand) || brandFilter.length === 0) &&
-//                 (categoryFilter.includes(item.category) || categoryFilter.length === 0) && (item.name.includes(query) || item.brand.includes(query) || queryFilter == item.category || queryFilter == '')
-//               ){
-//             return (
-//               <tr>
-//                 <td>{item.id}</td>
-//                 <td>{item.name}</td>
-//                 <td>{item.brand}</td>
-//                 <td>{item.category}</td>
-//                 <td>{item.preview_link}</td>
-//                 <td>{item.price}</td>
-//                 <td>{item.unit_price}</td>
-//                 <td>{item.description}</td>
-//                 <td>{item.profit}</td>
-//                 <td>{item.units}</td>
-//                 <td>{item.active}</td>
-//                 <td>{item.unit_paid}</td>
-//               </tr>
-//             );
-//               }
-//           })}
-//         </tbody>
-//       </Table>
-//     </>
-//   );
-// }
-
 import React from "react";
 import Axios from "axios";
 import { useEffect, useState } from "react";
@@ -229,24 +112,21 @@ export default function StickyHeadTable() {
 
 
   function createData(id,name,brand,category,preview,totalPrice,Price_Per_Unit, units_per_pack, profit,active,unit_paid_price) {
-     console.log("PRICE_PER_UNIT", Price_Per_Unit)
+    //  console.log("PRICE_PER_UNIT", Price_Per_Unit)
     return {id,name,brand,category,preview,totalPrice,Price_Per_Unit, units_per_pack, profit,active,unit_paid_price};
   }
 
-  //   id, name, brand, category, preview, Price_Per_Unit, units_per_pack, profits, acitve, unit_paid_price
-  const rows = [
-    // productList.map((item) => {
-    //     console.log("IDDDD",item.id)
-    //    createData(item.id, item.name, item.category, item.preview_link, item.unit_price, item.units, item.profit, item.active, item.unit_paid);
-    // //   }
-    // }),
+const rows = [];
+for (var i = 0; i < productList.length ; i++){
 
-    createData("id","name","brand","category","preview","totalPrice","65", "units_per_pack", "profit","active","unit_paid_price")
+  if (
+    (brandFilter.includes(productList[i].brand) || brandFilter.length === 0) &&
+    (categoryFilter.includes(productList[i].category) || categoryFilter.length === 0) && (productList[i].name.includes(query) || productList[i].brand.includes(query) || queryFilter == productList[i].category || queryFilter == '')
+  ) {
+  rows.push(createData(productList[i].id,productList[i].name,productList[i].brand,productList[i].category,productList[i].preview_link,productList[i].price,productList[i].unit_price, productList[i].units, productList[i].profit,productList[i].active,productList[i].unit_paid))
+  }
+}
 
-  ];
-  useEffect(() => {
-      console.log("ROWS!!",rows)
-  })
 
   const onFilterBrand = (brand) => {
     if (brandFilter.includes(brand)) {
@@ -326,7 +206,7 @@ export default function StickyHeadTable() {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
