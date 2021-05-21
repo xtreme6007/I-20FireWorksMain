@@ -11,6 +11,13 @@ import './index.css'
 
 
 export default function PostNew() {
+    useEffect(() => {
+
+      
+    })
+
+
+
 // Function used to post formik form
     const post = () => {
       Axios.post("/api/admin/postNew", {
@@ -132,6 +139,8 @@ export default function PostNew() {
           onChange={formik.handleChange}
           style={{marginLeft: "15%"}}
         />
+
+    <input type="file" accept="image/*" capture="camera" />
 
         <button type="submit">Submit</button>
       </form>
