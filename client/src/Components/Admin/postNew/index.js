@@ -11,10 +11,16 @@ import './index.css'
 
 
 export default function PostNew() {
-    useEffect(() => {
-
+  const [casePrice , setCasePrice] = useState();
+  const [unit, setUnit] = useState();
+  const [prodPrice, setProdPrice] = useState();
+  
+  useEffect(() => {
+      setProdPrice(((casePrice / unit) * 3) * 1.0825)
+   
       
     })
+
 
 
 
@@ -27,8 +33,6 @@ export default function PostNew() {
         price: formik.values.price,
         previewUrl: formik.values.url,
         description: formik.values.description,
-        units: formik.values.unit_amount,
-        paid: formik.values.paid
       }).then((res) => {
         console.log("hellooo")
       })
@@ -45,8 +49,6 @@ export default function PostNew() {
       price: "",
       url: "",
       files: "",
-      unit_amount: "",
-      paid: "",
     },
     onSubmit: (values) => {
       post()
@@ -56,6 +58,7 @@ export default function PostNew() {
   });
 
   return (
+    <>
     <Container maxWidth="sm" style={{backgroundColor: "green", borderRadius: "80px", marginTop: "25px"}}>
       <h1>Upload Product Form</h1>
       <form onSubmit={formik.handleSubmit}>
@@ -109,7 +112,7 @@ export default function PostNew() {
           type="text"
           onChange={formik.handleChange}
           value={formik.values.price}
-          label="Total Case Price"
+          label="Price"
         />
           <br/>
           {/* Preview Url */}
@@ -120,15 +123,6 @@ export default function PostNew() {
           onChange={formik.handleChange}
           value={formik.values.url}
           label="Preview Url"
-        />
-          <br/>
-          <TextField
-          id="unit_amount"
-          name="unit_amount"
-          type="text"
-          onChange={formik.handleChange}
-          value={formik.values.unit_amount}
-          label="How many Units?"
         />
     
         <br/>
@@ -144,6 +138,24 @@ export default function PostNew() {
 
         <button type="submit">Submit</button>
       </form>
+  
     </Container>
+    <div style={{margin: "100px"}}>
+    <form name= "Calculator">
+<h1>Price Calculator</h1>
+<label for= "case_price">Case Price</label>
+      <input name= "case_Price" id="case_price"  onChange = {(e) => {
+        setCasePrice(e.target.value)
+        }}
+      style= {{margin: "20px", aligin: "left"}}/>
+      <br />
+      <label for= "units">Units</label>
+      <input name="units" id="units" onChange= {(e) => {setUnit(e.target.value)}} style={{margin: "20px", aligin: "left"}}/>
+      <p>{prodPrice}</p>
+
+
+    </form>
+    </div>
+    </>
   );
 }

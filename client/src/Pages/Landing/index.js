@@ -20,15 +20,15 @@ export default function Landing() {
         <h1>I-20 Fireworks</h1>
         <p>
           Located in Van Texas we are a locally owned firework stand with the
-          goal of serving the DFW communitys as convient as possible. With an assortment of options from
+          goal of serving the community as convient as possible. With an assortment of options from
           Noveltiey Items, Fountains, Amazing Aerial Explosions and more we
           gurantee our products are of the higesht quality.
         </p>
         <div className="hero-btns">
           {/* <button>How It Works</button> */}
-          <Button variant="contained" color="default" style={{margin: "1%"}}>
+          {/* <Button variant="contained" color="default" style={{margin: "1%"}}>
             How It Works
-          </Button>
+          </Button> */}
           <Button variant="contained" color="primary" href='/search'>
             Start Shopping
           </Button>

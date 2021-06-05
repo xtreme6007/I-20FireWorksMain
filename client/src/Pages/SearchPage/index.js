@@ -6,6 +6,7 @@ import Container from "@material-ui/core/Container";
 import CardGroup from "react-bootstrap/CardGroup";
 import PrimarySearchAppBar from "../../Components/SearchMenu";
 import shallowCompare from 'react-addons-shallow-compare';
+import Pagination from '@material-ui/lab/Pagination';
 
 export default function SearchPage() {
   const [productList, setProductList] = useState([]);
@@ -15,6 +16,14 @@ export default function SearchPage() {
   const [query, setQuery] = useState("")
   const [queryFilter, setQueryFilter] = useState("")
   const [logedInStatus, setLogedInStatus] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [postsPerPage, setPostsPerPage] = useState(2)
+  const [indexOfLastPost, setIndexOfLastPost] = useState()
+  const [indexOfFirstPost, setIndexOfFirstPost] = useState()
+  const [currentPosts, setCurrentPosts] = useState([])
+  // const indexOfLastPost = currentPage * postsPerPage;
+  // const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  // const currentPosts = productList.splice(indexOfFirstPost, indexOfLastPost)
 
 
 // Check if user is loged in (non logged in users can still view products) and get all prodcuts on page load
@@ -28,6 +37,11 @@ export default function SearchPage() {
     Axios.get("/api/getProducts").then((response) => {
       setProductList(response.data);
     });
+    setIndexOfLastPost(currentPage * postsPerPage)
+    setIndexOfFirstPost(indexOfLastPost - postsPerPage)
+    setCurrentPosts(productList.splice(indexOfFirstPost, indexOfLastPost))
+
+    console.log("CurrentPosts: ",currentPosts)
   }, [brandFilter, categoryFilter]);
 // Used to filter results by Brand
   const onFilterBrand = (brand) => {
@@ -97,7 +111,7 @@ export default function SearchPage() {
                   name={val.name}
                   preview_link={val.preview_link}
                   description={val.description && val.description}
-                  price={val.unit_price && val.unit_price}
+                  price={val.price && val.price}
                   brand={val.brand}
                   category={val.category}
                 />
@@ -105,6 +119,13 @@ export default function SearchPage() {
             }
           })}
         </CardGroup>
+        <Pagination count={10} onClick={(page) => {
+          setCurrentPage(page.nativeEvent.target.firstChild);
+          // setIndexOfLastPost(currentPage * postsPerPage);
+          // setIndexOfFirstPost(indexOfLastPost - postsPerPage);
+          // setCurrentPosts(...productList.splice(indexOfFirstPost, indexOfLastPost))
+          }}/>
+
       </Container>
     </>
   );
