@@ -39,7 +39,7 @@ export default function CustomCard(props) {
               <CardMedia
                 className={classes.media}
                 image={cloudinaryCore.url(props.name)}
-                title="Contemplative Reptile"
+                title={props.name}
               />
             </div>
 
