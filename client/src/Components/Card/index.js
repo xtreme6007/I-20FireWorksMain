@@ -16,8 +16,9 @@ const cloudinaryCore = new Cloudinary({ cloud_name: "prestonscloud" });
 // Defining Styles
 const useStyles = makeStyles({
   root: {
-    maxWidth: "100%",
-    // height: 400,
+    maxWidth: "345px",
+    height: "350px",
+    width: "345px",
     margin: "10px",
   },
   media: {
@@ -94,15 +95,15 @@ export default function CustomCard(props) {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            {props.preview_link ? (
-              <Button size="small" color="primary" href={props.preview_link}>
+            {props.preview_link != "" ? (
+              <Button size="small" color="primary" href={props.preview_link} style={{margin: "auto"}}>
                 View Video
               </Button>
-            ) : null}
+            ) : <p style={{margin: "auto"}}>No Preview Available</p>}
 
-            <Button size="small" color="primary">
+            {/* <Button size="small" color="primary">
               Learn More
-            </Button>
+            </Button> */}
           </CardActions>
         </Card>
       </div>
