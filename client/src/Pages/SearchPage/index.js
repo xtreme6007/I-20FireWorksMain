@@ -6,15 +6,22 @@ import Container from "@material-ui/core/Container";
 import CardGroup from "react-bootstrap/CardGroup";
 import PrimarySearchAppBar from "../../Components/SearchMenu";
 import shallowCompare from 'react-addons-shallow-compare';
+import Pagination from 'react-bootstrap/Pagination'
 
 export default function SearchPage() {
   const [productList, setProductList] = useState([]);
   const [brandFilter, setBrandFilter] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState([]);
-  const [checked, setChecked] = useState({});
   const [query, setQuery] = useState("")
   const [queryFilter, setQueryFilter] = useState("")
   const [logedInStatus, setLogedInStatus] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [prodPerPage, setProdPerPage] = useState(10)
+  const [indexOfFirstProd, setIndexOfFirstProd] = useState()
+  const [indexOfLastProd, setIndexOfLastProd] = useState()
+  let active = 1;
+let items = [];
+  
 
 
 // Check if user is loged in (non logged in users can still view products) and get all prodcuts on page load
@@ -28,7 +35,24 @@ export default function SearchPage() {
     Axios.get("/api/getProducts").then((response) => {
       setProductList(response.data);
     });
+    // setIndexOfLastProd(currentPage * setProdPerPage);
+    // setIndexOfFirstProd(indexOfLastProd - prodPerPage);
+    // console.log(productList.splice(indexOfFirstProd, indexOfLastProd))
+
   }, [brandFilter, categoryFilter]);
+
+  useEffect(() => {
+    console.log("CurrentPage",currentPage)
+    console.log(indexOfFirstProd)
+  })
+
+  for (let number = 1; number <= 5; number++) {
+    items.push(
+      <Pagination.Item key={number} active={number === active}>
+        {number}
+      </Pagination.Item>,
+    );
+  }
 // Used to filter results by Brand
   const onFilterBrand = (brand) => {
     if (brandFilter.includes(brand)) {
@@ -95,7 +119,7 @@ export default function SearchPage() {
               return (
                 <CustomCard
                   name={val.name}
-                  preview_link={val.preview_link}
+                  preview_link={val.preview_link && val.preview_link}
                   description={val.description && val.description}
                   price={val.price && val.price}
                   brand={val.brand}
@@ -105,7 +129,17 @@ export default function SearchPage() {
             }
           })}
         </CardGroup>
+       
       </Container>
+      <div>
+   
+
+    <Pagination size="md" onClick ={(e) => {
+      let number = parseInt(e.target.firstChild);
+      console.log(number)
+    
+    }}>{items}</Pagination>
+        </div>
     </>
   );
 }

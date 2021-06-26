@@ -1,4 +1,5 @@
 {
+  "homepage":"http://xtreme6007.github.io/I-20FireWorksMain",
   "name": "server",
   "version": "1.0.0",
   "description": "",
@@ -7,6 +8,8 @@
     "node": "14.x"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "node server.js",
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
@@ -35,5 +38,8 @@
     "path": "^0.12.7",
     "react-table": "^7.7.0",
     "styled-components": "^5.3.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
   }
 }
