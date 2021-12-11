@@ -49,11 +49,19 @@ if (process.env.NODE_ENV === "production") {
 }
 // Api Call for getting all products
 app.get("/api/getProducts", (req, res) => {
+  const sqlGet = 'SELECT * FROM Inventory WHERE active = "True"';
+  db.query(sqlGet, (err, result) => {
+    res.send(result);
+  });
+});
+
+app.get("/api/getAllProducts", (req, res) => {
   const sqlGet = "SELECT * FROM Inventory";
   db.query(sqlGet, (err, result) => {
     res.send(result);
   });
 });
+
 // Api Call for getting all Brands
 app.get("/api/getBrands", (req, res) => {
   const sqlGet = "SELECT DISTINCT brand FROM Inventory";

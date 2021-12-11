@@ -106,7 +106,7 @@ export default function StickyHeadTable() {
 
   useEffect(() => {
     // API Call to get all prducts on page load
-    Axios.get("/api/getProducts").then((response) => {
+    Axios.get("/api/getAllProducts").then((response) => {
       setProductList(response.data);
       console.log("Response", response.data);
       console.log("List", productList);

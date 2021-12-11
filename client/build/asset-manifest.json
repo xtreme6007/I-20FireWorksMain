@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.fcf3fcf6.chunk.css",
-    "main.js": "/static/js/main.98d7872f.chunk.js",
-    "main.js.map": "/static/js/main.98d7872f.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.ff82f14b.js",
-    "runtime-main.js.map": "/static/js/runtime-main.ff82f14b.js.map",
-    "static/css/2.4c97ca4f.chunk.css": "/static/css/2.4c97ca4f.chunk.css",
-    "static/js/2.eca99983.chunk.js": "/static/js/2.eca99983.chunk.js",
-    "static/js/2.eca99983.chunk.js.map": "/static/js/2.eca99983.chunk.js.map",
-    "static/js/3.edf586cf.chunk.js": "/static/js/3.edf586cf.chunk.js",
-    "static/js/3.edf586cf.chunk.js.map": "/static/js/3.edf586cf.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.4c97ca4f.chunk.css.map": "/static/css/2.4c97ca4f.chunk.css.map",
-    "static/css/main.fcf3fcf6.chunk.css.map": "/static/css/main.fcf3fcf6.chunk.css.map",
-    "static/js/2.eca99983.chunk.js.LICENSE.txt": "/static/js/2.eca99983.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/static/media/logo.6ce24c58.svg"
+    "main.css": "/I-20FireWorksMain/static/css/main.fcf3fcf6.chunk.css",
+    "main.js": "/I-20FireWorksMain/static/js/main.7578006e.chunk.js",
+    "main.js.map": "/I-20FireWorksMain/static/js/main.7578006e.chunk.js.map",
+    "runtime-main.js": "/I-20FireWorksMain/static/js/runtime-main.a088807c.js",
+    "runtime-main.js.map": "/I-20FireWorksMain/static/js/runtime-main.a088807c.js.map",
+    "static/css/2.4c97ca4f.chunk.css": "/I-20FireWorksMain/static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.d150eee5.chunk.js": "/I-20FireWorksMain/static/js/2.d150eee5.chunk.js",
+    "static/js/2.d150eee5.chunk.js.map": "/I-20FireWorksMain/static/js/2.d150eee5.chunk.js.map",
+    "static/js/3.edf586cf.chunk.js": "/I-20FireWorksMain/static/js/3.edf586cf.chunk.js",
+    "static/js/3.edf586cf.chunk.js.map": "/I-20FireWorksMain/static/js/3.edf586cf.chunk.js.map",
+    "index.html": "/I-20FireWorksMain/index.html",
+    "static/css/2.4c97ca4f.chunk.css.map": "/I-20FireWorksMain/static/css/2.4c97ca4f.chunk.css.map",
+    "static/css/main.fcf3fcf6.chunk.css.map": "/I-20FireWorksMain/static/css/main.fcf3fcf6.chunk.css.map",
+    "static/js/2.d150eee5.chunk.js.LICENSE.txt": "/I-20FireWorksMain/static/js/2.d150eee5.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/I-20FireWorksMain/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.ff82f14b.js",
+    "static/js/runtime-main.a088807c.js",
     "static/css/2.4c97ca4f.chunk.css",
-    "static/js/2.eca99983.chunk.js",
+    "static/js/2.d150eee5.chunk.js",
     "static/css/main.fcf3fcf6.chunk.css",
-    "static/js/main.98d7872f.chunk.js"
+    "static/js/main.7578006e.chunk.js"
   ]
 }

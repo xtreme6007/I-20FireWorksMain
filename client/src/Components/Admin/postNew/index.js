@@ -17,8 +17,6 @@ export default function PostNew() {
   
   useEffect(() => {
       setProdPrice(((casePrice / unit) * 3) * 1.0825)
-   
-      
     })
 
 
@@ -109,7 +107,7 @@ export default function PostNew() {
         <TextField
           id="price"
           name="price"
-          type="text"
+          type="float"
           onChange={formik.handleChange}
           value={formik.values.price}
           label="Price"

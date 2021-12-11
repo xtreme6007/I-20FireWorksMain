@@ -35,16 +35,9 @@ let items = [];
     Axios.get("/api/getProducts").then((response) => {
       setProductList(response.data);
     });
-    // setIndexOfLastProd(currentPage * setProdPerPage);
-    // setIndexOfFirstProd(indexOfLastProd - prodPerPage);
-    // console.log(productList.splice(indexOfFirstProd, indexOfLastProd))
-
+   
   }, [brandFilter, categoryFilter]);
 
-  useEffect(() => {
-    console.log("CurrentPage",currentPage)
-    console.log(indexOfFirstProd)
-  })
 
   for (let number = 1; number <= 5; number++) {
     items.push(
