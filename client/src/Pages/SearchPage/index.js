@@ -27,7 +27,7 @@ let items = [];
 // Check if user is loged in (non logged in users can still view products) and get all prodcuts on page load
   useEffect(() => {
     Axios.get("/api/login").then((response)=> {
-      if(response.data.LoggedIn == true){
+      if(response.data.LoggedIn === true){
           setLogedInStatus(response.data.User[0].user_name)
       }
   })
@@ -50,7 +50,7 @@ let items = [];
   const onFilterBrand = (brand) => {
     if (brandFilter.includes(brand)) {
       const newList = brandFilter
-        .filter((name) => name != brand)
+        .filter((name) => name !== brand)
         .map((val) => {
           return val;
         });
@@ -63,7 +63,7 @@ let items = [];
   const onFilterCategory = (category) => {
     if (categoryFilter.includes(category)) {
       const newList = categoryFilter
-        .filter((name) => name != category)
+        .filter((name) => name !== category)
         .map((val) => {
           return val;
         });
@@ -107,7 +107,7 @@ let items = [];
           {productList.map((val) => {
             if (
               (brandFilter.includes(val.brand) || brandFilter.length === 0) &&
-              (categoryFilter.includes(val.category) || categoryFilter.length === 0) && (val.name.includes(query) || val.brand.includes(query) || queryFilter == val.category || queryFilter == '')
+              (categoryFilter.includes(val.category) || categoryFilter.length === 0) && (val.name.includes(query) || val.brand.includes(query) || queryFilter === val.category || queryFilter === '')
             ) {
               return (
                 <CustomCard
@@ -119,7 +119,8 @@ let items = [];
                   category={val.category}
                 />
               );
-            }
+            } 
+            return;
           })}
         </CardGroup>
        
